@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import logo from "../../../assets/images/logo.png";
 import Button from '@material-ui/core/Button';
@@ -12,6 +12,10 @@ import { useHistory } from 'react-router-dom';
 import { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import { useDispatch, useSelector } from "react-redux";
+import { getProductsAction } from '../../../redux/actions/getProductsAction';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 
 const StyledBadge = withStyles((theme) => ({
@@ -23,10 +27,28 @@ const StyledBadge = withStyles((theme) => ({
   },
 }))(Badge);
 
-const Header = () => {
+const Header = ({ search, setSearch, category, price, ratings, setPage }) => {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
+
   const [isLogin, setIsLogin] = useState(false);
+
+  const { isLoading } = useSelector((state) => state.getProducts);
+
+  const handleSearch = () => {
+    setPage(1)
+    const payload = { search, category, priceLTE: price[1], priceGTE: price[0], ratings, page: 1 }
+    dispatch(getProductsAction(payload))
+  }
+
+  useEffect(() => {
+    if (search == "") {
+      setPage(1)
+      const payload = { search, category, priceLTE: price[1], priceGTE: price[0], ratings, page: 1 }
+      dispatch(getProductsAction(payload))
+    }
+  }, [search])
 
   return (
     <div>
@@ -46,16 +68,43 @@ const Header = () => {
 
             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
               <div className={classes.container}>
+                {/* <div className={classes.searchContainer}>
+                  <input
+                    type="text"
+                    placeholder="Enter Product Name"
+                    className={classes.input}
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                  <button className={classes.searchButton}>
+                    {isLoading ? <CircularProgress className={classes.loading} /> : <SearchIcon className={classes.searchIcon} onClick={handleSearch} />}
+                  </button>
+                </div> */}
                 <div className={classes.searchContainer}>
                   <input
                     type="text"
                     placeholder="Enter Product Name"
                     className={classes.input}
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        handleSearch();
+                      }
+                    }}
                   />
                   <button className={classes.searchButton}>
-                    <SearchIcon className={classes.searchIcon} />
+                    {isLoading ? (
+                      <CircularProgress style={{ width: "20px", height: "20px" }} />
+                    ) : (
+                      <SearchIcon
+                        className={classes.searchIcon}
+                        onClick={handleSearch}
+                      />
+                    )}
                   </button>
                 </div>
+
               </div>
             </Grid>
 
