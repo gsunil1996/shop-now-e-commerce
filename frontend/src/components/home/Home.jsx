@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import useStyles from "./HomeStyles";
 import { TextField, withStyles } from '@material-ui/core';
 import FormControl from '@material-ui/core/FormControl';
@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProductsAction } from "../../redux/actions/getProductsAction";
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Pagination from '@material-ui/lab/Pagination';
-
+import { useHistory } from 'react-router-dom'
 
 
 const CustomTextField = withStyles({
@@ -34,8 +34,10 @@ const CustomTextField = withStyles({
 
 
 const Home = ({ search, category, setCategory, price, setPrice, ratings, setRatings, page, setPage }) => {
+
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const { data, isLoading, isError, error, isSuccess } = useSelector((state) => state.getProducts);
 
@@ -131,7 +133,7 @@ const Home = ({ search, category, setCategory, price, setPrice, ratings, setRati
               label="Ratings"
               style={{ height: '45px' }}
             >
-              {ratingsArr.map(item => <MenuItem value={item}>{item}</MenuItem>)}
+              {ratingsArr.map(item => <MenuItem key={item} value={item}>{item}</MenuItem>)}
             </Select>
           </FormControl>
         </div>
@@ -147,7 +149,7 @@ const Home = ({ search, category, setCategory, price, setPrice, ratings, setRati
               label="Categeories"
               style={{ height: '45px' }}
             >
-              {categories.map(item => <MenuItem value={item}>{item}</MenuItem>)}
+              {categories.map(item => <MenuItem key={item} value={item}>{item}</MenuItem>)}
             </Select>
           </FormControl>
         </div>
@@ -184,20 +186,19 @@ const Home = ({ search, category, setCategory, price, setPrice, ratings, setRati
             <div style={{ display: "flex", justifyContent: "space-around", flexWrap: "wrap" }} >
               {data?.products?.map(item => {
                 return (
-                  <Card style={{ width: "250px", boxShadow: "rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px", marginTop: "20px" }} >
-                    {console.log("chekjlsdjo", item)}
+                  <Card style={{ width: "300px", boxShadow: "rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px", marginTop: "20px", borderRadius: "15px", background: "#fffaf5" }} key={item._id} >
                     <CardContent >
                       <div style={{ display: "flex", justifyContent: "center" }} >
                         <img src={item?.images[0]?.url} alt="" style={{ maxWidth: "100%", maxHeight: "150px" }} />
                       </div>
 
-                      <div className={classes.productName}>
+                      <div className={classes.productName} onClick={() => history.push(`/product/${item._id}`)} >
                         <h3>{item?.name}</h3>
                       </div>
 
                       <div>
                         <div style={{ display: "flex", justifyContent: "center" }} >
-                          <Rating name="read-only" value={item?.ratings} precision={0.1} readOnly />
+                          <Rating name="read-only" value={Number(item?.ratings)} precision={0.1} readOnly />
                         </div>
 
                         <div style={{ textAlign: "center", color: "#232F3E", fontWeight: 500 }} >
@@ -206,6 +207,7 @@ const Home = ({ search, category, setCategory, price, setPrice, ratings, setRati
 
                         <div style={{ display: "flex", justifyContent: "center" }}>
                           <Button
+                            onClick={() => history.push(`/product/${item._id}`)}
                             style={{ background: "#FA9C23", color: "#fff", marginTop: "10px" }}
                             variant="contained">
                             View Details

@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Home from "./components/home/Home";
 import Header from "./components/layouts/header/Header";
+import SingleProductDetails from "./components/singleProductDetails/SingleProductDetails";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ const App = () => {
             setPage={setPage}
           />
         </Route>
+        <Route exact path="/product/:id"> <SingleProductDetails /> </Route>
         <Route>404 Page not found</Route>
       </Switch>
     </div>

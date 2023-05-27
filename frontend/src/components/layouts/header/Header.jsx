@@ -68,18 +68,6 @@ const Header = ({ search, setSearch, category, price, ratings, setPage }) => {
 
             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
               <div className={classes.container}>
-                {/* <div className={classes.searchContainer}>
-                  <input
-                    type="text"
-                    placeholder="Enter Product Name"
-                    className={classes.input}
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                  />
-                  <button className={classes.searchButton}>
-                    {isLoading ? <CircularProgress className={classes.loading} /> : <SearchIcon className={classes.searchIcon} onClick={handleSearch} />}
-                  </button>
-                </div> */}
                 <div className={classes.searchContainer}>
                   <input
                     type="text"
