@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import Home from "./components/home/Home";
 import Header from "./components/layouts/header/Header";
 import SingleProductDetails from "./components/singleProductDetails/SingleProductDetails";
+import Login from "./components/user/login/Login";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -36,6 +37,7 @@ const App = () => {
           />
         </Route>
         <Route exact path="/product/:id"> <SingleProductDetails /> </Route>
+        <Route exact path="/login"> <Login /> </Route>
         <Route>404 Page not found</Route>
       </Switch>
     </div>

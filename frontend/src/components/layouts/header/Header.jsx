@@ -13,8 +13,8 @@ import { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { useDispatch, useSelector } from "react-redux";
-import { getProductsAction } from '../../../redux/actions/getProductsAction';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { getProductsAction } from '../../../redux/actions/productActions';
 
 
 
@@ -109,7 +109,11 @@ const Header = ({ search, setSearch, category, price, ratings, setPage }) => {
                   <div>
                     <Button
                       variant="contained"
-                      className={classes.loginButton}
+                      style={{
+                        background: "#FA9C23",
+                        color: "#000",
+                      }}
+                      onClick={() => history.push("/login")}
                     >
                       Login
                     </Button>

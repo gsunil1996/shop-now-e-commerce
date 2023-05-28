@@ -10,11 +10,11 @@ import CardContent from '@material-ui/core/CardContent';
 import Rating from '@material-ui/lab/Rating';
 import Button from '@material-ui/core/Button';
 import { useDispatch, useSelector } from "react-redux";
-import { getProductsAction } from "../../redux/actions/getProductsAction";
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Pagination from '@material-ui/lab/Pagination';
 import { useHistory } from 'react-router-dom'
-
+import { getProductsAction } from "../../redux/actions/productActions";
+import { Helmet } from 'react-helmet';
 
 const CustomTextField = withStyles({
   root: {
@@ -95,6 +95,10 @@ const Home = ({ search, category, setCategory, price, setPrice, ratings, setRati
 
   return (
     <div style={{ width: "95%", margin: "auto", }} >
+
+      <Helmet>
+        <title>Shop Now - Buy Best Products Online</title>
+      </Helmet>
 
       <div style={{ width: "100%", margin: "auto", display: "flex", justifyContent: "center", alignItems: "center", flexWrap: "wrap", gap: "20px", marginTop: "20px", }} >
         <div>

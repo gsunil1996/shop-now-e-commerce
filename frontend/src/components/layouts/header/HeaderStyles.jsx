@@ -76,10 +76,6 @@ const useStyles = makeStyles((theme) => ({
         color: "#fff",
         cursor: "pointer",
     },
-    loginButton: {
-        background: "#FA9C23",
-        color: "#000",
-    },
     cartButton: {
         //
     },

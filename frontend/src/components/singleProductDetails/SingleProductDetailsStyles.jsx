@@ -92,11 +92,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: "20px",
         textAlign: "center",
     },
-    addToCartButton: {
-        background: "#FA9C23",
-        color: "#fff",
-        borderRadius: "20px",
-    },
+
     stockStatus: {
         marginTop: "20px",
         fontWeight: 500,
@@ -155,7 +151,7 @@ const useStyles = makeStyles((theme) => ({
     reviewRating: {
         display: "flex",
         justifyContent: "center"
-    }
+    },
 }));
 
 export default useStyles;

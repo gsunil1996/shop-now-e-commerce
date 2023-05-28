@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import useStyles from "./SingleProductDetailsStyles";
 import { useParams } from 'react-router-dom';
-import { getSingleProductAction } from '../../redux/actions/getSingleProductAction';
 import { useDispatch, useSelector } from "react-redux";
 import Button from '@material-ui/core/Button';
 import { Grid } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import { getSingleProductAction } from '../../redux/actions/productActions';
+import { Helmet } from 'react-helmet';
 
 const SingleProductDetails = () => {
     const { id } = useParams();
@@ -25,6 +26,9 @@ const SingleProductDetails = () => {
 
     return (
         <div className={classes.container}>
+            <Helmet>
+                <title>{data?.product?.name}</title>
+            </Helmet>
             {isLoading ? (
                 <div className={classes.loadingContainer}>
                     <LinearProgress className={classes.loadingBar} />
@@ -61,7 +65,13 @@ const SingleProductDetails = () => {
                                     </div>
                                 </div>
                                 <div className={classes.addToCartContainer}>
-                                    <Button variant="contained" size='large' className={classes.addToCartButton}>
+                                    <Button variant="contained" size='large'
+                                        style={{
+                                            background: "#FA9C23",
+                                            color: "#fff",
+                                            borderRadius: "20px",
+                                        }}
+                                    >
                                         Add to cart
                                     </Button>
                                 </div>
@@ -106,6 +116,7 @@ const SingleProductDetails = () => {
                     )}
                 </>
             ) : null}
+
         </div>
     );
 }
