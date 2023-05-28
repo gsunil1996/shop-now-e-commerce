@@ -22,7 +22,7 @@ export const loginAction = ({ email, password }) => async (dispatch) => {
         })
 
     } catch (error) {
-        console.log("checkError", error)
+        //  console.log("checkError", error)
         dispatch({
             type: LOGIN_FAILURE,
             payload: error && error.message
@@ -50,3 +50,56 @@ export const isUserLoggedIn = () => {
         }
     };
 };
+
+export const registerAction = ({ name, email, password }) => async (dispatch) => {
+    try {
+        dispatch({
+            type: REGISTER_USER_REQUEST
+        })
+
+        const { data } = await axios.post(`http://localhost:4000/api/v1/register`, { name, email, password });
+
+        const { token, user } = data;
+
+        // console.log("checkDAta", token, user);
+
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(user));
+
+        dispatch({
+            type: REGISTER_USER_SUCCESS,
+            payload: data || {}
+        })
+
+    } catch (error) {
+        //  console.log("checkError", error)
+        dispatch({
+            type: REGISTER_USER_FAILURE,
+            payload: error && error.message
+        })
+    }
+}
+
+export const logoutAction = () => async (dispatch) => {
+    try {
+        dispatch({
+            type: LOGOUT_USER_REQUEST
+        })
+
+        const { data } = await axios.post(`http://localhost:4000/api/v1/logout`);
+
+        localStorage.clear();
+
+        dispatch({
+            type: LOGOUT_USER_SUCCESS,
+            payload: data || {}
+        })
+
+    } catch (error) {
+        //  console.log("checkError", error)
+        dispatch({
+            type: LOGOUT_USER_FAILURE,
+            payload: error && error.message
+        })
+    }
+}

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import useStyles from "./LoginStyles";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux'
 import { loginAction } from '../../../redux/actions/userActions';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
@@ -19,8 +19,6 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import { LOGIN_RESET } from '../../../redux/actionTypes/userTypes';
-
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -37,6 +35,7 @@ const Login = () => {
     const history = useHistory();
 
     const { isLoading, isError, error, isSuccess, isAuthenticated } = useSelector(state => state.auth);
+
 
     const [formValues, setFormValues] = useState(initialValues);
     const [showPassword, setShowPassword] = useState(false);
@@ -55,14 +54,14 @@ const Login = () => {
     };
 
     const [openSuccessAlert, setOpenSuccessAlert] = useState(false);
-    const [openFailureAlert, setOpenFailureAlert] = useState(false);
+    const [openFailureAlert, setOpenFailueAlert] = useState(false);
 
     const handleClickOpenFailureAlert = () => {
-        setOpenFailureAlert(true)
+        setOpenFailueAlert(true)
     }
 
     const handleCloseFailureAlert = () => {
-        setOpenFailureAlert(false)
+        setOpenFailueAlert(false)
     }
 
     const handleClickOpenSuccessAlert = () => {
@@ -74,29 +73,20 @@ const Login = () => {
     };
 
     useEffect(() => {
+
         if (isAuthenticated) {
             history.push("/")
         }
 
         if (isError) {
             handleClickOpenFailureAlert()
-            setTimeout(() => {
-                handleCloseFailureAlert()
-            }, 1000)
-
-            dispatch({ type: LOGIN_RESET });
         }
 
         if (isSuccess) {
             handleClickOpenSuccessAlert()
-
-            setTimeout(() => {
-                handleCloseSuccessAlert()
-            }, 1000)
-
-            dispatch({ type: LOGIN_RESET });
         }
-    }, [dispatch, isAuthenticated, isError, isSuccess, history]);
+
+    }, [dispatch, isAuthenticated, isError, isSuccess, history])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -115,9 +105,9 @@ const Login = () => {
                     <Grid item xs={10} sm={10} md={4} lg={4} xl={4} style={{ margin: "auto" }} >
                         <Card style={{ boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px" }} >
                             <CardContent>
-                                <div className={classes.title}>Login</div>
+                                <div style={{ fontSize: "35px", fontWeight: 600, textAlign: "center" }} >Login</div>
                                 <form onSubmit={handleSubmit}>
-                                    <div className={classes.formField}>
+                                    <div style={{ marginTop: '20px' }}>
                                         <TextField
                                             id="outlined-basic"
                                             label="Email"
@@ -131,7 +121,7 @@ const Login = () => {
                                         />
                                     </div>
 
-                                    <div className={classes.formField}>
+                                    <div style={{ marginTop: '20px' }}>
                                         <FormControl variant="outlined" fullWidth required>
                                             <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                                             <OutlinedInput
@@ -157,11 +147,11 @@ const Login = () => {
                                         </FormControl>
                                     </div>
 
-                                    <div className={classes.forgotPassword} onClick={() => history.push("/password/forgot")}>
+                                    <div style={{ marginTop: '20px', textAlign: "end", color: "#949494", fontWeight: 600, fontSize: "16px", cursor: "pointer" }} onClick={() => history.push("/password/forgot")} >
                                         Forgot Password?
                                     </div>
 
-                                    <div className={classes.formField}>
+                                    <div style={{ marginTop: '20px' }}>
                                         <Button
                                             variant="contained"
                                             fullWidth
@@ -172,13 +162,14 @@ const Login = () => {
                                                 color: "#fff",
                                                 borderRadius: "10px",
                                             }}
-                                            type="submit"
-                                        >
-                                            {isLoading ? <CircularProgress className={classes.loginSpinner} /> : "Login"}
+                                            type="submit">
+
+                                            {isLoading ? <CircularProgress style={{ color: "#fff" }} /> : "Login"}
+
                                         </Button>
                                     </div>
 
-                                    <div className={classes.newUser} onClick={() => history.push("/register")}>
+                                    <div style={{ marginTop: '20px', textAlign: "end", color: "#949494", fontWeight: 600, fontSize: "16px", cursor: "pointer" }} onClick={() => history.push("/register")} >
                                         New User?
                                     </div>
                                 </form>
@@ -190,7 +181,7 @@ const Login = () => {
 
             <Snackbar open={openSuccessAlert} autoHideDuration={6000} onClose={handleCloseSuccessAlert}>
                 <Alert onClose={handleCloseSuccessAlert} severity="success">
-                    User Login Successfully!
+                    user Login Sucessfully!
                 </Alert>
             </Snackbar>
 
@@ -199,8 +190,9 @@ const Login = () => {
                     {error}
                 </Alert>
             </Snackbar>
+
         </div>
-    );
+    )
 }
 
-export default Login;
+export default Login

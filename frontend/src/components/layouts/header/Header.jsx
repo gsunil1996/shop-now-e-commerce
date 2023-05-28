@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import logo from "../../../assets/images/logo.png";
 import Button from '@material-ui/core/Button';
@@ -9,13 +9,25 @@ import IconButton from '@material-ui/core/IconButton';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import useStyles from "./HeaderStyles";
 import { useHistory } from 'react-router-dom';
-import { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { useDispatch, useSelector } from "react-redux";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { getProductsAction } from '../../../redux/actions/productActions';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import Popper from '@material-ui/core/Popper';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import { logoutAction } from '../../../redux/actions/userActions';
+import { LOGOUT_USER_RESET } from '../../../redux/actionTypes/userTypes';
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 
 const StyledBadge = withStyles((theme) => ({
@@ -28,19 +40,97 @@ const StyledBadge = withStyles((theme) => ({
 }))(Badge);
 
 const Header = ({ search, setSearch, category, price, ratings, setPage }) => {
+
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const [isLogin, setIsLogin] = useState(false);
-
   const { isLoading } = useSelector((state) => state.getProducts);
+
+  const { isAuthenticated, user, isLogoutSuccess, isLogoutError, Logouterror } = useSelector(state => state.auth);
+
+
+  const [open, setOpen] = React.useState(false);
+  const anchorRef = React.useRef(null);
+
+  const [openSuccessAlert, setOpenSuccessAlert] = useState(false);
+  const [openFailureAlert, setOpenFailureAlert] = useState(false);
+
+  const handleClickOpenFailureAlert = () => {
+    setOpenFailureAlert(true)
+  }
+
+  const handleCloseFailureAlert = () => {
+    setOpenFailureAlert(false)
+  }
+
+  const handleClickOpenSuccessAlert = () => {
+    setOpenSuccessAlert(true);
+  };
+
+  const handleCloseSuccessAlert = () => {
+    setOpenSuccessAlert(false);
+  };
+
+  useEffect(() => {
+
+    if (isLogoutError) {
+      handleClickOpenFailureAlert()
+      setTimeout(() => {
+        handleCloseFailureAlert()
+      }, 1000)
+      dispatch({ type: LOGOUT_USER_RESET });
+    }
+
+    if (isLogoutSuccess) {
+      handleClickOpenSuccessAlert()
+      setTimeout(() => {
+        handleCloseSuccessAlert()
+      }, 1000)
+      dispatch({ type: LOGOUT_USER_RESET });
+    }
+  }, [dispatch, isAuthenticated, isLogoutError, isLogoutSuccess]);
+
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  function handleListKeyDown(event) {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      setOpen(false);
+    }
+  }
+
+  // return focus to the button when we transitioned from !open -> open
+  const prevOpen = React.useRef(open);
+  React.useEffect(() => {
+    if (prevOpen.current === true && open === false) {
+      anchorRef.current.focus();
+    }
+
+    prevOpen.current = open;
+  }, [open]);
 
   const handleSearch = () => {
     setPage(1)
     const payload = { search, category, priceLTE: price[1], priceGTE: price[0], ratings, page: 1 }
     dispatch(getProductsAction(payload))
   }
+
+  const handleLogout = (event) => {
+    handleClose(event)
+    dispatch(logoutAction());
+  }
+
 
   useEffect(() => {
     if (search == "") {
@@ -98,12 +188,38 @@ const Header = ({ search, setSearch, category, price, ratings, setPage }) => {
 
             <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
               <div className={classes.flexContainer}>
-                {isLogin ?
+                {isAuthenticated ?
                   <div className={classes.profileContainer}>
-                    <Avatar alt="Profile pic" src="" className={classes.avatar} />
-                    <div className={classes.profileText}>Sunil Kumar</div>
+                    <Avatar alt="Profile pic" src={user?.avatar?.url} className={classes.avatar} />
+                    <div className={classes.profileText}>{user?.name}</div>
                     <div>
-                      <ArrowDropDownIcon className={classes.profileIcon} />
+                      <ArrowDropDownIcon
+                        ref={anchorRef}
+                        aria-controls={open ? 'menu-list-grow' : undefined}
+                        aria-haspopup="true"
+                        onClick={handleToggle}
+                        className={classes.profileIcon} />
+                      <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal style={{ zIndex: 99 }} >
+                        {({ TransitionProps, placement }) => (
+                          <Grow
+                            {...TransitionProps}
+                            style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+                          >
+                            <Paper>
+                              <ClickAwayListener onClickAway={handleClose}>
+                                <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+
+                                  {user.role == "admin" && <MenuItem onClick={handleClose}>Dashboard</MenuItem>}
+
+                                  <MenuItem onClick={handleClose}>Orders</MenuItem>
+                                  <MenuItem onClick={handleClose}>Profile</MenuItem>
+                                  <MenuItem onClick={handleLogout} style={{ color: "#5C0512" }} >Logout</MenuItem>
+                                </MenuList>
+                              </ClickAwayListener>
+                            </Paper>
+                          </Grow>
+                        )}
+                      </Popper>
                     </div>
                   </div> :
                   <div>
@@ -131,6 +247,17 @@ const Header = ({ search, setSearch, category, price, ratings, setPage }) => {
           </Grid>
         </div>
       </div>
+      <Snackbar open={openSuccessAlert} autoHideDuration={6000} onClose={handleCloseSuccessAlert}>
+        <Alert onClose={handleCloseSuccessAlert} severity="success">
+          User Logout Successfully!
+        </Alert>
+      </Snackbar>
+
+      <Snackbar open={openFailureAlert} autoHideDuration={6000} onClose={handleCloseFailureAlert}>
+        <Alert onClose={handleCloseFailureAlert} severity="error">
+          {Logouterror}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

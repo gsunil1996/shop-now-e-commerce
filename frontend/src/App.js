@@ -16,7 +16,7 @@ const App = () => {
   const [ratings, setRatings] = useState(0);
   const [page, setPage] = useState(1);
 
-  const { isAuthenticated, user } = useSelector(state => state.auth);
+  const { isAuthenticated } = useSelector(state => state.auth);
 
   // persist user across application
   useEffect(() => {
