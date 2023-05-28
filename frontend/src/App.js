@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Home from "./components/home/Home";
 import Header from "./components/layouts/header/Header";
 import SingleProductDetails from "./components/singleProductDetails/SingleProductDetails";
 import Login from "./components/user/login/Login";
+import { isUserLoggedIn, loginAction } from "./redux/actions/userActions";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -15,7 +16,17 @@ const App = () => {
   const [ratings, setRatings] = useState(0);
   const [page, setPage] = useState(1);
 
-  // product.stock > 0 ? "In Stock" (text green) : "Out of Stock" (text red)
+  const { isAuthenticated, user } = useSelector(state => state.auth);
+
+  // persist user across application
+  useEffect(() => {
+    if (!isAuthenticated) {
+      const token = localStorage.getItem('token');
+      if (token) {
+        dispatch(isUserLoggedIn());
+      }
+    }
+  }, [dispatch, isAuthenticated]);
 
   return (
     <div>

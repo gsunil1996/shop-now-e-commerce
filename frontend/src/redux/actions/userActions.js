@@ -8,7 +8,13 @@ export const loginAction = ({ email, password }) => async (dispatch) => {
         })
 
         const { data } = await axios.post(`http://localhost:4000/api/v1/login`, { email, password });
-        console.log("checkDAta", data);
+
+        const { token, user } = data;
+
+        // console.log("checkDAta", token, user);
+
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(user));
 
         dispatch({
             type: LOGIN_SUCCESS,
@@ -23,3 +29,24 @@ export const loginAction = ({ email, password }) => async (dispatch) => {
         })
     }
 }
+
+export const isUserLoggedIn = () => {
+    return async (dispatch) => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            const user = JSON.parse(localStorage.getItem("user"));
+            dispatch({
+                type: LOGIN_SUCCESS,
+                payload: {
+                    token,
+                    user,
+                },
+            });
+        } else {
+            dispatch({
+                type: LOGIN_FAILURE,
+                payload: { error: "Failed to login" },
+            });
+        }
+    };
+};
