@@ -200,6 +200,10 @@ const Home = ({ search, category, setCategory, price, setPrice, ratings, setRati
                         <h3>{item?.name}</h3>
                       </div>
 
+                      <div className={classes.productName} >
+                        <h3>{item?.price}</h3>
+                      </div>
+
                       <div>
                         <div style={{ display: "flex", justifyContent: "center" }} >
                           <Rating name="read-only" value={Number(item?.ratings)} precision={0.1} readOnly />

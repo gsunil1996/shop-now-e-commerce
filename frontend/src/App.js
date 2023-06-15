@@ -8,6 +8,8 @@ import Login from "./components/user/login/Login";
 import { loadUser } from "./redux/actions/userActions";
 import Register from "./components/user/register/Register";
 import Profile from "./components/user/profile/Profile";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import PageNotFound from "./components/404/PageNotFound";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -33,7 +35,7 @@ const App = () => {
       <Header search={search} setSearch={setSearch} category={category} price={price} ratings={ratings} setPage={setPage} />
 
       <Switch>
-        <Route exact path="/">
+        {/* <Route exact path="/">
           <Home
             search={search}
             category={category}
@@ -45,12 +47,31 @@ const App = () => {
             page={page}
             setPage={setPage}
           />
-        </Route>
-        <Route exact path="/product/:id"> <SingleProductDetails /> </Route>
-        <Route exact path="/login"> <Login /> </Route>
-        <Route exact path="/register"> <Register /> </Route>
-        <Route exact path="/profile"> <Profile /> </Route>
-        <Route>404 Page not found</Route>
+        </Route> */}
+
+        <Route
+          path="/"
+          exact
+          render={(props) => (
+            <Home
+              {...props}
+              search={search}
+              category={category}
+              setCategory={setCategory}
+              price={price}
+              setPrice={setPrice}
+              ratings={ratings}
+              setRatings={setRatings}
+              page={page}
+              setPage={setPage}
+            />
+          )}
+        />
+        <Route path="/product/:id" component={SingleProductDetails} exact />
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
+        <ProtectedRoute path="/profile" component={Profile} exact />
+        <Route path="*" component={PageNotFound} />
       </Switch>
     </div>
   );
