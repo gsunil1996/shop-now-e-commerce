@@ -47,7 +47,7 @@ const Header = ({ search, setSearch, category, price, ratings, setPage }) => {
 
   const { isLoading } = useSelector((state) => state.getProducts);
 
-  const { isAuthenticated, user, isLogoutSuccess, isLogoutError, Logouterror } = useSelector(state => state.auth);
+  const { isAuthenticated, user, logout: { isSuccess, isError, error } } = useSelector(state => state.auth);
 
 
   const [open, setOpen] = React.useState(false);
@@ -74,7 +74,7 @@ const Header = ({ search, setSearch, category, price, ratings, setPage }) => {
 
   useEffect(() => {
 
-    if (isLogoutError) {
+    if (isError) {
       handleClickOpenFailureAlert()
       setTimeout(() => {
         handleCloseFailureAlert()
@@ -82,14 +82,14 @@ const Header = ({ search, setSearch, category, price, ratings, setPage }) => {
       dispatch({ type: LOGOUT_USER_RESET });
     }
 
-    if (isLogoutSuccess) {
+    if (isSuccess) {
       handleClickOpenSuccessAlert()
       setTimeout(() => {
         handleCloseSuccessAlert()
       }, 1000)
       dispatch({ type: LOGOUT_USER_RESET });
     }
-  }, [dispatch, isAuthenticated, isLogoutError, isLogoutSuccess]);
+  }, [dispatch, isAuthenticated, isError, isSuccess]);
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -255,7 +255,7 @@ const Header = ({ search, setSearch, category, price, ratings, setPage }) => {
 
       <Snackbar open={openFailureAlert} autoHideDuration={6000} onClose={handleCloseFailureAlert}>
         <Alert onClose={handleCloseFailureAlert} severity="error">
-          {Logouterror}
+          {error}
         </Alert>
       </Snackbar>
     </div>

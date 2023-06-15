@@ -36,7 +36,7 @@ const Login = () => {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const { isLoading, isError, error, isSuccess, isAuthenticated } = useSelector(state => state.auth);
+    const { isAuthenticated, login: { isLoading, isError, error, isSuccess } } = useSelector(state => state.auth);
 
     const [formValues, setFormValues] = useState(initialValues);
     const [showPassword, setShowPassword] = useState(false);
@@ -199,6 +199,7 @@ const Login = () => {
                     {error}
                 </Alert>
             </Snackbar>
+            {console.log("Errorrrr", error)}
         </div>
     );
 }

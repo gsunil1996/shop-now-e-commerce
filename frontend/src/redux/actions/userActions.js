@@ -7,14 +7,7 @@ export const loginAction = ({ email, password }) => async (dispatch) => {
             type: LOGIN_REQUEST
         })
 
-        const { data } = await axios.post(`http://localhost:4000/api/v1/login`, { email, password });
-
-        const { token, user } = data;
-
-        // console.log("checkDAta", token, user);
-
-        localStorage.setItem("token", token);
-        localStorage.setItem("user", JSON.stringify(user));
+        const { data } = await axios.post(`http://localhost:4000/api/v1/login`, { email, password }, { withCredentials: true });
 
         dispatch({
             type: LOGIN_SUCCESS,
@@ -22,7 +15,7 @@ export const loginAction = ({ email, password }) => async (dispatch) => {
         })
 
     } catch (error) {
-        //  console.log("checkError", error)
+        console.log("checkError", error.message)
         dispatch({
             type: LOGIN_FAILURE,
             payload: error && error.message
@@ -30,26 +23,27 @@ export const loginAction = ({ email, password }) => async (dispatch) => {
     }
 }
 
-export const isUserLoggedIn = () => {
-    return async (dispatch) => {
-        const token = localStorage.getItem("token");
-        if (token) {
-            const user = JSON.parse(localStorage.getItem("user"));
-            dispatch({
-                type: LOGIN_SUCCESS,
-                payload: {
-                    token,
-                    user,
-                },
-            });
-        } else {
-            dispatch({
-                type: LOGIN_FAILURE,
-                payload: { error: "Failed to login" },
-            });
-        }
-    };
-};
+export const loadUser = () => async (dispatch) => {
+    try {
+        dispatch({
+            type: GET_USER_PROFILE_REQUEST
+        })
+
+        const { data } = await axios.get(`http://localhost:4000/api/v1/me`, { withCredentials: true });
+
+        dispatch({
+            type: GET_USER_PROFILE_SUCCESS,
+            payload: data || {}
+        })
+
+    } catch (error) {
+        // console.log("checkError", error.response.data.message, error)
+        dispatch({
+            type: GET_USER_PROFILE_FAILURE,
+            payload: error && error.message
+        })
+    }
+}
 
 export const registerAction = ({ name, email, password }) => async (dispatch) => {
     try {
@@ -58,13 +52,6 @@ export const registerAction = ({ name, email, password }) => async (dispatch) =>
         })
 
         const { data } = await axios.post(`http://localhost:4000/api/v1/register`, { name, email, password });
-
-        const { token, user } = data;
-
-        // console.log("checkDAta", token, user);
-
-        localStorage.setItem("token", token);
-        localStorage.setItem("user", JSON.stringify(user));
 
         dispatch({
             type: REGISTER_USER_SUCCESS,
@@ -86,9 +73,7 @@ export const logoutAction = () => async (dispatch) => {
             type: LOGOUT_USER_REQUEST
         })
 
-        const { data } = await axios.post(`http://localhost:4000/api/v1/logout`);
-
-        localStorage.clear();
+        const { data } = await axios.get(`http://localhost:4000/api/v1/logout`, { withCredentials: true });
 
         dispatch({
             type: LOGOUT_USER_SUCCESS,

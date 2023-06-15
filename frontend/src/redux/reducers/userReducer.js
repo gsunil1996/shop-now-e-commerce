@@ -2,9 +2,11 @@ import {
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
     LOGIN_FAILURE,
+    LOGIN_RESET,
     REGISTER_USER_REQUEST,
     REGISTER_USER_SUCCESS,
     REGISTER_USER_FAILURE,
+    REGISTER_USER_RESET,
     LOGOUT_USER_REQUEST,
     LOGOUT_USER_SUCCESS,
     LOGOUT_USER_FAILURE,
@@ -12,40 +14,41 @@ import {
     GET_USER_PROFILE_REQUEST,
     GET_USER_PROFILE_SUCCESS,
     GET_USER_PROFILE_FAILURE,
-    LOGIN_RESET,
+    GET_USER_PROFILE_RESET
 } from "../actionTypes/userTypes";
 
 const authInitialState = {
-
-
     user: {},
-    token: localStorage.getItem("token"),
+    token: null,
     isAuthenticated: false,
 
-    // login
-    isLoading: false,
-    isError: false,
-    error: null,
-    isSuccess: false,
+    login: {
+        isLoading: false,
+        isError: false,
+        error: null,
+        isSuccess: false,
+    },
 
-    // register
-    isRegisterLoading: false,
-    isRegisterError: false,
-    Registererror: null,
-    isRegisterSuccess: false,
+    register: {
+        isLoading: false,
+        isError: false,
+        error: null,
+        isSuccess: false,
+    },
 
-    // logout
-    isLogoutLoading: false,
-    isLogoutError: false,
-    Logouterror: null,
-    isLogoutSuccess: false,
+    logout: {
+        isLoading: false,
+        isError: false,
+        error: null,
+        isSuccess: false,
+    },
 
-    // profile
-    isProfileLoading: false,
-    isProfileError: false,
-    Profileerror: null,
-    isProfileSuccess: false,
-
+    profile: {
+        isLoading: false,
+        isError: false,
+        error: null,
+        isSuccess: false,
+    }
 };
 
 export const authReducer = (state = authInitialState, action) => {
@@ -56,42 +59,51 @@ export const authReducer = (state = authInitialState, action) => {
                 ...state,
                 user: {},
                 token: null,
-                isLoading: true,
-                isError: false,
-                error: null,
-                isSuccess: false,
                 isAuthenticated: false,
+                login: {
+                    isLoading: false,
+                    isError: false,
+                    error: null,
+                    isSuccess: false,
+                }
             }
 
         case LOGIN_SUCCESS:
             return {
                 ...state,
-                isLoading: false,
-                isSuccess: true,
-                isAuthenticated: true,
                 user: action.payload.user,
-                token: action.payload.token
+                token: action.payload.token,
+                isAuthenticated: true,
+                login: {
+                    ...state.login,
+                    isLoading: false,
+                    isSuccess: true,
+                }
             }
 
         case LOGIN_FAILURE:
             return {
                 ...state,
-                isAuthenticated: false,
                 user: {},
                 token: null,
-                isLoading: false,
-                isError: true,
-                error: action.payload,
-                isSuccess: false,
+                isAuthenticated: false,
+                login: {
+                    ...state.login,
+                    isLoading: false,
+                    isError: true,
+                    error: action.payload,
+                }
             }
 
         case LOGIN_RESET:
             return {
                 ...state,
-                isLoading: false,
-                isError: false,
-                error: null,
-                isSuccess: false,
+                login: {
+                    isLoading: false,
+                    isError: false,
+                    error: null,
+                    isSuccess: false,
+                }
             }
 
         case REGISTER_USER_REQUEST:
@@ -100,41 +112,61 @@ export const authReducer = (state = authInitialState, action) => {
                 user: {},
                 token: null,
                 isAuthenticated: false,
-                isRegisterLoading: false,
-                isRegisterError: false,
-                Registererror: null,
-                isRegisterSuccess: false,
+                register: {
+                    isLoading: false,
+                    isError: false,
+                    error: null,
+                    isSuccess: false,
+                }
             }
 
         case REGISTER_USER_SUCCESS:
             return {
                 ...state,
-                isRegisterLoading: false,
-                isRegisterSuccess: true,
-                isAuthenticated: true,
                 user: action.payload.user,
-                token: action.payload.token
+                token: action.payload.token,
+                isAuthenticated: true,
+                register: {
+                    ...state.register,
+                    isLoading: false,
+                    isSuccess: true,
+                }
             }
 
         case REGISTER_USER_FAILURE:
             return {
                 ...state,
-                isAuthenticated: false,
                 user: {},
                 token: null,
-                isRegisterLoading: false,
-                isRegisterError: true,
-                Registererror: action.payload,
-                isRegisterSuccess: false,
+                isAuthenticated: false,
+                register: {
+                    ...state.register,
+                    isLoading: false,
+                    isError: true,
+                    error: action.payload,
+                }
+            }
+
+        case REGISTER_USER_RESET:
+            return {
+                ...state,
+                register: {
+                    isLoading: false,
+                    isError: false,
+                    error: null,
+                    isSuccess: false,
+                }
             }
 
         case LOGOUT_USER_REQUEST:
             return {
                 ...state,
-                isLogoutLoading: true,
-                isLogoutError: false,
-                Logouterror: null,
-                isLogoutSuccess: false,
+                logout: {
+                    isLoading: false,
+                    isError: false,
+                    error: null,
+                    isSuccess: false,
+                }
             };
 
         case LOGOUT_USER_SUCCESS:
@@ -143,61 +175,85 @@ export const authReducer = (state = authInitialState, action) => {
                 user: {},
                 token: null,
                 isAuthenticated: false,
-                isLogoutLoading: false,
-                isLogoutSuccess: true,
+                logout: {
+                    ...state.logout,
+                    isLoading: false,
+                    isSuccess: true,
+                }
             };
 
         case LOGOUT_USER_FAILURE:
             return {
                 ...state,
-                isLogoutLoading: false,
-                isLogoutError: true,
-                Logouterror: action.payload,
-                isLogoutSuccess: false,
+                logout: {
+                    ...state.logout,
+                    isLoading: false,
+                    isError: true,
+                    error: action.payload,
+                }
             };
 
         case LOGOUT_USER_RESET:
             return {
                 ...state,
-                isLogoutLoading: false,
-                isLogoutError: false,
-                Logouterror: null,
-                isLogoutSuccess: false,
+                logout: {
+                    isLoading: false,
+                    isError: false,
+                    error: null,
+                    isSuccess: false,
+                }
             }
 
         case GET_USER_PROFILE_REQUEST:
             return {
                 ...state,
                 user: {},
-                token: localStorage.getItem("token"),
+                token: null,
                 isAuthenticated: false,
-                isProfileLoading: false,
-                isProfileError: false,
-                Profileerror: null,
-                isProfileSuccess: false,
+                profile: {
+                    isLoading: false,
+                    isError: false,
+                    error: null,
+                    isSuccess: false,
+                }
             };
 
         case GET_USER_PROFILE_SUCCESS:
             return {
                 ...state,
-                isProfileLoading: false,
-                isProfileSuccess: true,
-                isAuthenticated: true,
                 user: action.payload.user,
-                token: action.payload.token
+                isAuthenticated: true,
+                profile: {
+                    ...state.profile,
+                    isLoading: false,
+                    isSuccess: true,
+                }
             };
 
         case GET_USER_PROFILE_FAILURE:
             return {
                 ...state,
-                isProfileLoading: false,
-                isProfileError: true,
-                Profileerror: action.payload,
-                isProfileSuccess: false,
-            };
+                profile: {
+                    ...state.profile,
+                    isLoading: false,
+                    isError: true,
+                    error: action.payload,
+                }
+            }
+
+        case GET_USER_PROFILE_RESET:
+            return {
+                ...state,
+                profile: {
+                    isLoading: false,
+                    isError: false,
+                    error: null,
+                    isSuccess: false,
+                }
+            }
 
         default:
             return state;
     }
-};
+}
 

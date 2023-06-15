@@ -5,7 +5,7 @@ import Home from "./components/home/Home";
 import Header from "./components/layouts/header/Header";
 import SingleProductDetails from "./components/singleProductDetails/SingleProductDetails";
 import Login from "./components/user/login/Login";
-import { isUserLoggedIn, loginAction } from "./redux/actions/userActions";
+import { loadUser } from "./redux/actions/userActions";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -21,10 +21,7 @@ const App = () => {
   // persist user across application
   useEffect(() => {
     if (!isAuthenticated) {
-      const token = localStorage.getItem('token');
-      if (token) {
-        dispatch(isUserLoggedIn());
-      }
+      dispatch(loadUser());
     }
   }, [dispatch, isAuthenticated]);
 
