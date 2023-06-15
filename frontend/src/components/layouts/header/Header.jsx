@@ -102,6 +102,8 @@ const Header = ({ search, setSearch, category, price, ratings, setPage }) => {
     setOpen(false);
   };
 
+
+
   function handleListKeyDown(event) {
     if (event.key === 'Tab') {
       event.preventDefault();
@@ -128,6 +130,11 @@ const Header = ({ search, setSearch, category, price, ratings, setPage }) => {
   const handleLogout = (event) => {
     handleClose(event)
     dispatch(logoutAction());
+  }
+
+  const handleProfile = (event) => {
+    handleClose(event)
+    history.push("/profile")
   }
 
 
@@ -211,7 +218,7 @@ const Header = ({ search, setSearch, category, price, ratings, setPage }) => {
                                   {user.role == "admin" && <MenuItem onClick={handleClose}>Dashboard</MenuItem>}
 
                                   <MenuItem onClick={handleClose}>Orders</MenuItem>
-                                  <MenuItem onClick={handleClose}>Profile</MenuItem>
+                                  <MenuItem onClick={handleProfile}>Profile</MenuItem>
                                   <MenuItem onClick={handleLogout} style={{ color: "#5C0512" }} >Logout</MenuItem>
                                 </MenuList>
                               </ClickAwayListener>
