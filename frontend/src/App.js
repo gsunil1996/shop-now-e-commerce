@@ -10,6 +10,7 @@ import Register from "./components/user/register/Register";
 import Profile from "./components/user/profile/Profile";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import PageNotFound from "./components/404/PageNotFound";
+import UpdateProfile from "./components/user/updateProfile/UpdateProfile";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -71,6 +72,7 @@ const App = () => {
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <ProtectedRoute path="/profile" component={Profile} exact />
+        <Route path="/profile/update" component={UpdateProfile} exact />
         <Route path="*" component={PageNotFound} />
       </Switch>
     </div>

@@ -14,7 +14,11 @@ import {
     GET_USER_PROFILE_REQUEST,
     GET_USER_PROFILE_SUCCESS,
     GET_USER_PROFILE_FAILURE,
-    GET_USER_PROFILE_RESET
+    GET_USER_PROFILE_RESET,
+    UPDATE_PROFILE_REQUEST,
+    UPDATE_PROFILE_SUCCESS,
+    UPDATE_PROFILE_FAILURE,
+    UPDATE_PROFILE_RESET
 } from "../actionTypes/userTypes";
 
 const authInitialState = {
@@ -61,7 +65,7 @@ export const authReducer = (state = authInitialState, action) => {
                 token: null,
                 isAuthenticated: false,
                 login: {
-                    isLoading: false,
+                    isLoading: true,
                     isError: false,
                     error: null,
                     isSuccess: false,
@@ -113,7 +117,7 @@ export const authReducer = (state = authInitialState, action) => {
                 token: null,
                 isAuthenticated: false,
                 register: {
-                    isLoading: false,
+                    isLoading: true,
                     isError: false,
                     error: null,
                     isSuccess: false,
@@ -162,7 +166,7 @@ export const authReducer = (state = authInitialState, action) => {
             return {
                 ...state,
                 logout: {
-                    isLoading: false,
+                    isLoading: true,
                     isError: false,
                     error: null,
                     isSuccess: false,
@@ -211,7 +215,7 @@ export const authReducer = (state = authInitialState, action) => {
                 token: null,
                 isAuthenticated: false,
                 profile: {
-                    isLoading: false,
+                    isLoading: true,
                     isError: false,
                     error: null,
                     isSuccess: false,
@@ -257,3 +261,81 @@ export const authReducer = (state = authInitialState, action) => {
     }
 }
 
+const userInitialState = {
+    updateProfile: {
+        isLoading: false,
+        isError: false,
+        error: null,
+        isSuccess: false,
+    },
+    updatePassword: {
+        isLoading: false,
+        isError: false,
+        error: null,
+        isSuccess: false,
+    },
+    updateUser: {
+        isLoading: false,
+        isError: false,
+        error: null,
+        isSuccess: false,
+    },
+    deleteUser: {
+        isLoading: false,
+        isError: false,
+        error: null,
+        isSuccess: false,
+        isDeleted: false
+    }
+}
+
+export const userReducer = (state = userInitialState, action) => {
+    switch (action.type) {
+
+        case UPDATE_PROFILE_REQUEST:
+            return {
+                ...state,
+                updateProfile: {
+                    isLoading: true,
+                    isError: false,
+                    error: null,
+                    isSuccess: false,
+                }
+            }
+
+        case UPDATE_PROFILE_SUCCESS:
+            return {
+                ...state,
+                updateProfile: {
+                    ...state.updateProfile,
+                    isLoading: false,
+                    isSuccess: true,
+                }
+            }
+
+        case UPDATE_PROFILE_FAILURE:
+            return {
+                ...state,
+                updateProfile: {
+                    ...state.updateProfile,
+                    isLoading: false,
+                    isError: true,
+                    error: action.payload,
+                }
+            }
+
+        case UPDATE_PROFILE_RESET:
+            return {
+                ...state,
+                updateProfile: {
+                    isLoading: false,
+                    isError: false,
+                    error: null,
+                    isSuccess: false,
+                }
+            }
+
+        default:
+            return state
+    }
+}
