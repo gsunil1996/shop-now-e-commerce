@@ -79,7 +79,6 @@ const Header = ({ search, setSearch, category, price, ratings, setPage }) => {
       setTimeout(() => {
         handleCloseFailureAlert()
       }, 1000)
-      dispatch({ type: LOGOUT_USER_RESET });
     }
 
     if (isSuccess) {

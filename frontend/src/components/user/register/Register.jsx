@@ -114,8 +114,6 @@ const Register = () => {
             setTimeout(() => {
                 handleCloseFailureAlert()
             }, 1000)
-
-            dispatch({ type: REGISTER_USER_RESET });
         }
 
         if (isSuccess) {

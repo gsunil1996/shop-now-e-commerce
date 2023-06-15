@@ -83,8 +83,6 @@ const Login = () => {
             setTimeout(() => {
                 handleCloseFailureAlert()
             }, 1000)
-
-            dispatch({ type: LOGIN_RESET });
         }
 
         if (isSuccess) {
