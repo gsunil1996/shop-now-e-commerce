@@ -104,9 +104,10 @@ const Register = () => {
     }
 
     useEffect(() => {
-        // if (isAuthenticated) {
-        //     history.push('/')
-        // }
+
+        if (isAuthenticated) {
+            history.push('/')
+        }
 
         if (isError) {
             handleClickOpenFailureAlert()
@@ -119,7 +120,6 @@ const Register = () => {
 
         if (isSuccess) {
             handleClickOpenSuccessAlert()
-            history.push('/login')
             setTimeout(() => {
                 handleCloseSuccessAlert()
             }, 1000)
