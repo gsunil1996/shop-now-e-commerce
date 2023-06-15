@@ -6,6 +6,7 @@ import Header from "./components/layouts/header/Header";
 import SingleProductDetails from "./components/singleProductDetails/SingleProductDetails";
 import Login from "./components/user/login/Login";
 import { loadUser } from "./redux/actions/userActions";
+import Register from "./components/user/register/Register";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -46,6 +47,7 @@ const App = () => {
         </Route>
         <Route exact path="/product/:id"> <SingleProductDetails /> </Route>
         <Route exact path="/login"> <Login /> </Route>
+        <Route exact path="/register"> <Register /> </Route>
         <Route>404 Page not found</Route>
       </Switch>
     </div>

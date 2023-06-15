@@ -18,18 +18,24 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
 
   const { name, email, password } = req.body;
 
-  const user = await User.create({
-    name,
-    email,
-    password,
+  const userEmail = await User.findOne({ email });
 
-    avatar: {
-      public_id: result.public_id,
-      url: result.secure_url,
-    },
-  });
+  if (userEmail) {
+    return next(new ErrorHandler("User already exists", 400));
+  } else {
+    const user = await User.create({
+      name,
+      email,
+      password,
 
-  sendToken(user, 200, res);
+      avatar: {
+        public_id: result.public_id,
+        url: result.secure_url,
+      },
+    });
+
+    sendToken(user, 200, res);
+  }
 });
 
 // Login User  =>  /api/v1/login

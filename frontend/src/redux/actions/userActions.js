@@ -45,13 +45,13 @@ export const loadUser = () => async (dispatch) => {
     }
 }
 
-export const registerAction = ({ name, email, password }) => async (dispatch) => {
+export const registerAction = (formData) => async (dispatch) => {
     try {
         dispatch({
             type: REGISTER_USER_REQUEST
         })
 
-        const { data } = await axios.post(`http://localhost:4000/api/v1/register`, { name, email, password });
+        const { data } = await axios.post(`http://localhost:4000/api/v1/register`, formData, { withCredentials: true });
 
         dispatch({
             type: REGISTER_USER_SUCCESS,
@@ -59,13 +59,14 @@ export const registerAction = ({ name, email, password }) => async (dispatch) =>
         })
 
     } catch (error) {
-        //  console.log("checkError", error)
         dispatch({
             type: REGISTER_USER_FAILURE,
             payload: error && error.message
         })
     }
 }
+
+
 
 export const logoutAction = () => async (dispatch) => {
     try {
