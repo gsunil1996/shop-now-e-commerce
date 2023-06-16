@@ -22,7 +22,15 @@ import {
     UPDATE_PASSWORD_REQUEST,
     UPDATE_PASSWORD_SUCCESS,
     UPDATE_PASSWORD_FAILURE,
-    UPDATE_PASSWORD_RESET
+    UPDATE_PASSWORD_RESET,
+    FORGOT_PASSWORD_REQUEST,
+    FORGOT_PASSWORD_SUCCESS,
+    FORGOT_PASSWORD_FAILURE,
+    FORGOT_PASSWORD_RESET,
+    NEW_PASSWORD_REQUEST,
+    NEW_PASSWORD_SUCCESS,
+    NEW_PASSWORD_FAILURE,
+    NEW_PASSWORD_RESET
 } from "../actionTypes/userTypes";
 
 const authInitialState = {
@@ -380,6 +388,112 @@ export const userReducer = (state = userInitialState, action) => {
                 }
             }
 
+        default:
+            return state
+    }
+}
+
+const forgotPasswordInitialState = {
+    forgotPassword: {
+        isLoading: false,
+        isError: false,
+        error: null,
+        isSuccess: false,
+        message: ""
+    },
+    newPassword: {
+        isLoading: false,
+        isError: false,
+        error: null,
+        isSuccess: false,
+    }
+}
+
+export const forgotPasswordReducer = (state = forgotPasswordInitialState, action) => {
+    switch (action.type) {
+        case FORGOT_PASSWORD_REQUEST:
+            return {
+                ...state,
+                forgotPassword: {
+                    isLoading: true,
+                    isError: false,
+                    error: null,
+                    isSuccess: false,
+                    message: ""
+                }
+            }
+        case FORGOT_PASSWORD_SUCCESS:
+            return {
+                ...state,
+                forgotPassword: {
+                    ...state.forgotPassword,
+                    isLoading: false,
+                    isSuccess: true,
+                    message: action.payload
+                }
+            }
+        case FORGOT_PASSWORD_FAILURE:
+            return {
+                ...state,
+                forgotPassword: {
+                    ...state.forgotPassword,
+                    isLoading: false,
+                    isError: true,
+                    error: action.payload,
+                }
+            }
+
+        case FORGOT_PASSWORD_RESET:
+            return {
+                ...state,
+                forgotPassword: {
+                    isLoading: false,
+                    isError: false,
+                    error: null,
+                    isSuccess: false,
+                    message: ""
+                }
+            }
+
+        case NEW_PASSWORD_REQUEST:
+            return {
+                ...state,
+                newPassword: {
+                    isLoading: true,
+                    isError: false,
+                    error: null,
+                    isSuccess: false,
+                }
+            }
+        case NEW_PASSWORD_SUCCESS:
+            return {
+                ...state,
+                newPassword: {
+                    ...state.newPassword,
+                    isLoading: false,
+                    isSuccess: true,
+                }
+            }
+        case NEW_PASSWORD_FAILURE:
+            return {
+                ...state,
+                newPassword: {
+                    ...state.newPassword,
+                    isLoading: false,
+                    isError: true,
+                    error: action.payload,
+                }
+            }
+        case NEW_PASSWORD_RESET:
+            return {
+                ...state,
+                newPassword: {
+                    isLoading: false,
+                    isError: false,
+                    error: null,
+                    isSuccess: false,
+                }
+            }
         default:
             return state
     }

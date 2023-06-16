@@ -114,7 +114,11 @@ const UpdateProfile = () => {
                 handleCloseSuccessAlert()
             }, 1000)
 
-            dispatch({ type: UPDATE_PROFILE_RESET });
+            setTimeout(() => {
+                dispatch({ type: UPDATE_PROFILE_RESET });
+            }, 2000)
+
+
             dispatch(loadUser());
 
             setTimeout(() => {

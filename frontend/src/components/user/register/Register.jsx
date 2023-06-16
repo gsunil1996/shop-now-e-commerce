@@ -122,7 +122,10 @@ const Register = () => {
                 handleCloseSuccessAlert()
             }, 1000)
 
-            dispatch({ type: REGISTER_USER_RESET });
+            setTimeout(() => {
+                dispatch({ type: REGISTER_USER_RESET });
+            }, 2000)
+
         }
 
     }, [dispatch, isSuccess, isError, history, isAuthenticated])

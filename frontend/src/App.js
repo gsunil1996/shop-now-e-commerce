@@ -12,6 +12,8 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import PageNotFound from "./components/404/PageNotFound";
 import UpdateProfile from "./components/user/updateProfile/UpdateProfile";
 import UpdatePassword from "./components/user/updatePassword/UpdatePassword";
+import ForgotPassword from "./components/user/forgotPassword/ForgotPassword";
+import NewPassword from "./components/user/newPassword/NewPassword";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -58,10 +60,11 @@ const App = () => {
         <Route path="/product/:id" component={SingleProductDetails} exact />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
+        <Route path="/password/forgot" component={ForgotPassword} exact />
+        <Route path="/password/reset/:token" component={NewPassword} exact />
         <ProtectedRoute path="/profile" component={Profile} exact />
         <ProtectedRoute path="/profile/update" component={UpdateProfile} exact />
-        {/* <ProtectedRoute path="/password/update" component={UpdatePassword} exact /> */}
-        <Route path="/password/update" component={UpdatePassword} exact />
+        <ProtectedRoute path="/password/update" component={UpdatePassword} exact />
         <Route path="*" component={PageNotFound} />
       </Switch>
     </div>

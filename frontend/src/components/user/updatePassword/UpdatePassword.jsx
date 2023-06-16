@@ -63,7 +63,9 @@ const UpdatePassword = () => {
                 handleCloseSuccessAlert()
             }, 1000)
 
-            dispatch({ type: UPDATE_PASSWORD_RESET });
+            setTimeout(() => {
+                dispatch({ type: UPDATE_PASSWORD_RESET });
+            }, 2000)
 
             setTimeout(() => {
                 history.push('/profile')

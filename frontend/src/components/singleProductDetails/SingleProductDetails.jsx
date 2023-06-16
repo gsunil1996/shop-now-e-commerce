@@ -77,7 +77,7 @@ const SingleProductDetails = () => {
                                 </div>
                                 <div className={classes.stockStatus}>
                                     {data?.product?.stock > 0 ? (
-                                        <span className={classes.inStock}>In Stock</span>
+                                        <span className={classes.inStock}>In Stock - {data?.product?.stock}</span>
                                     ) : (
                                         <span className={classes.outOfStock}>Out of Stock</span>
                                     )}
