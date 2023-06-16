@@ -18,7 +18,7 @@ export const loginAction = ({ email, password }) => async (dispatch) => {
         console.log("checkError", error.message)
         dispatch({
             type: LOGIN_FAILURE,
-            payload: error && error.message
+            payload: error.response.data.message ? error.response.data.message : error.message
         })
     }
 }
@@ -40,7 +40,7 @@ export const loadUser = () => async (dispatch) => {
         // console.log("checkError", error.response.data.message, error)
         dispatch({
             type: GET_USER_PROFILE_FAILURE,
-            payload: error && error.message
+            payload: error.response.data.message ? error.response.data.message : error.message
         })
     }
 }
@@ -61,7 +61,7 @@ export const registerAction = (formData) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: REGISTER_USER_FAILURE,
-            payload: error && error.message
+            payload: error.response.data.message ? error.response.data.message : error.message
         })
     }
 }
@@ -85,7 +85,7 @@ export const logoutAction = () => async (dispatch) => {
         //  console.log("checkError", error)
         dispatch({
             type: LOGOUT_USER_FAILURE,
-            payload: error && error.message
+            payload: error.response.data.message ? error.response.data.message : error.message
         })
     }
 }
@@ -106,7 +106,7 @@ export const updateProfileAction = (userData) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: UPDATE_PROFILE_FAILURE,
-            payload: error.message
+            payload: error.response.data.message ? error.response.data.message : error.message
         })
     }
 }
@@ -125,9 +125,10 @@ export const updatePasswordAction = (passwords) => async (dispatch) => {
         })
 
     } catch (error) {
+        console.log("chospdfi", error.message, error.response)
         dispatch({
             type: UPDATE_PASSWORD_FAILURE,
-            payload: error.message
+            payload: error.response.data.message ? error.response.data.message : error.message
         })
     }
 }

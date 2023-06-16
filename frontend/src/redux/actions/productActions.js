@@ -19,7 +19,7 @@ export const getProductsAction = ({ search, category, priceLTE, priceGTE, rating
         // console.log("checkError", error, error.response)
         dispatch({
             type: GET_PRODUCTS_FAILURE,
-            payload: error && error.message
+            payload: error.response.data.message ? error.response.data.message : error.message
         })
     }
 }
@@ -40,7 +40,7 @@ export const getSingleProductAction = ({ id }) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: GET_SINGLE_PRODUCT_FAILURE,
-            payload: error && error.message
+            payload: error.response.data.message ? error.response.data.message : error.message
         })
     }
 }
