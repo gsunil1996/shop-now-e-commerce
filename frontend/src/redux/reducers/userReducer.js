@@ -18,7 +18,11 @@ import {
     UPDATE_PROFILE_REQUEST,
     UPDATE_PROFILE_SUCCESS,
     UPDATE_PROFILE_FAILURE,
-    UPDATE_PROFILE_RESET
+    UPDATE_PROFILE_RESET,
+    UPDATE_PASSWORD_REQUEST,
+    UPDATE_PASSWORD_SUCCESS,
+    UPDATE_PASSWORD_FAILURE,
+    UPDATE_PASSWORD_RESET
 } from "../actionTypes/userTypes";
 
 const authInitialState = {
@@ -328,6 +332,47 @@ export const userReducer = (state = userInitialState, action) => {
             return {
                 ...state,
                 updateProfile: {
+                    isLoading: false,
+                    isError: false,
+                    error: null,
+                    isSuccess: false,
+                }
+            }
+
+        case UPDATE_PASSWORD_REQUEST:
+            return {
+                ...state,
+                updatePassword: {
+                    isLoading: true,
+                    isError: false,
+                    error: null,
+                    isSuccess: false,
+                }
+            }
+        case UPDATE_PASSWORD_SUCCESS:
+            return {
+                ...state,
+                updatePassword: {
+                    ...state.updatePassword,
+                    isLoading: false,
+                    isSuccess: true,
+                }
+            }
+        case UPDATE_PASSWORD_FAILURE:
+            return {
+                ...state,
+                updatePassword: {
+                    ...state.updatePassword,
+                    isLoading: false,
+                    isError: true,
+                    error: action.payload,
+                }
+            }
+
+        case UPDATE_PASSWORD_RESET:
+            return {
+                ...state,
+                updatePassword: {
                     isLoading: false,
                     isError: false,
                     error: null,

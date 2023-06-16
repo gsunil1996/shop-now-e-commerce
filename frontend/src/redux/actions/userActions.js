@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, REGISTER_USER_REQUEST, REGISTER_USER_SUCCESS, REGISTER_USER_FAILURE, LOGOUT_USER_REQUEST, LOGOUT_USER_SUCCESS, LOGOUT_USER_FAILURE, GET_USER_PROFILE_REQUEST, GET_USER_PROFILE_SUCCESS, GET_USER_PROFILE_FAILURE, UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_SUCCESS, UPDATE_PROFILE_FAILURE } from "../actionTypes/userTypes";
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, REGISTER_USER_REQUEST, REGISTER_USER_SUCCESS, REGISTER_USER_FAILURE, LOGOUT_USER_REQUEST, LOGOUT_USER_SUCCESS, LOGOUT_USER_FAILURE, GET_USER_PROFILE_REQUEST, GET_USER_PROFILE_SUCCESS, GET_USER_PROFILE_FAILURE, UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_SUCCESS, UPDATE_PROFILE_FAILURE, UPDATE_PASSWORD_REQUEST, UPDATE_PASSWORD_SUCCESS, UPDATE_PASSWORD_FAILURE } from "../actionTypes/userTypes";
 
 export const loginAction = ({ email, password }) => async (dispatch) => {
     try {
@@ -106,6 +106,27 @@ export const updateProfileAction = (userData) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: UPDATE_PROFILE_FAILURE,
+            payload: error.message
+        })
+    }
+}
+
+// Update password
+export const updatePasswordAction = (passwords) => async (dispatch) => {
+    try {
+
+        dispatch({ type: UPDATE_PASSWORD_REQUEST })
+
+        const { data } = await axios.put('http://localhost:4000/api/v1/password/update', passwords, { withCredentials: true })
+
+        dispatch({
+            type: UPDATE_PASSWORD_SUCCESS,
+            payload: data.success
+        })
+
+    } catch (error) {
+        dispatch({
+            type: UPDATE_PASSWORD_FAILURE,
             payload: error.message
         })
     }

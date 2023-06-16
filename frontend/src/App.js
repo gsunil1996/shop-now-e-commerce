@@ -11,6 +11,7 @@ import Profile from "./components/user/profile/Profile";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import PageNotFound from "./components/404/PageNotFound";
 import UpdateProfile from "./components/user/updateProfile/UpdateProfile";
+import UpdatePassword from "./components/user/updatePassword/UpdatePassword";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -36,20 +37,6 @@ const App = () => {
       <Header search={search} setSearch={setSearch} category={category} price={price} ratings={ratings} setPage={setPage} />
 
       <Switch>
-        {/* <Route exact path="/">
-          <Home
-            search={search}
-            category={category}
-            setCategory={setCategory}
-            price={price}
-            setPrice={setPrice}
-            ratings={ratings}
-            setRatings={setRatings}
-            page={page}
-            setPage={setPage}
-          />
-        </Route> */}
-
         <Route
           path="/"
           exact
@@ -72,7 +59,9 @@ const App = () => {
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <ProtectedRoute path="/profile" component={Profile} exact />
-        <Route path="/profile/update" component={UpdateProfile} exact />
+        <ProtectedRoute path="/profile/update" component={UpdateProfile} exact />
+        {/* <ProtectedRoute path="/password/update" component={UpdatePassword} exact /> */}
+        <Route path="/password/update" component={UpdatePassword} exact />
         <Route path="*" component={PageNotFound} />
       </Switch>
     </div>
