@@ -11,11 +11,21 @@ async function getCart(req, res) {
             return res.status(404).json({ message: 'Cart not found' });
         }
 
-        res.json(cart);
+        let totalItems = 0;
+        let totalPrice = 0;
+
+        cart.items.forEach((item) => {
+            totalItems += item.quantity;
+            totalPrice += item.productId.price * item.quantity;
+        });
+
+        res.json({ cart, totalItems, totalPrice });
     } catch (error) {
         res.status(500).json({ message: 'Error retrieving cart' });
     }
 }
+
+
 
 // Add a product to the cart
 

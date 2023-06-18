@@ -257,7 +257,7 @@ const Header = ({ search, setSearch, category, price, ratings, setPage }) => {
                 }
                 <div>
                   <IconButton aria-label="cart" className={classes.cartButton} onClick={() => history.push("/cart")} >
-                    <StyledBadge badgeContent={cartItems?.items?.length} color="secondary">
+                    <StyledBadge badgeContent={cartItems?.cart?.items?.length} color="secondary">
                       <ShoppingCartIcon className={classes.cartIcon} />
                     </StyledBadge>
                   </IconButton>
