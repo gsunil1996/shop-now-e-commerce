@@ -99,8 +99,10 @@ const Header = ({ search, setSearch, category, price, ratings, setPage }) => {
   }, [dispatch, isAuthenticated, isError, isSuccess]);
 
   useEffect(() => {
-    dispatch(getCartAction({ userId: user?._id }))
-  }, [dispatch, user])
+    if (user?._id) {
+      dispatch(getCartAction({ userId: user?._id }))
+    }
+  }, [dispatch, user?._id])
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -254,7 +256,7 @@ const Header = ({ search, setSearch, category, price, ratings, setPage }) => {
                   </div>
                 }
                 <div>
-                  <IconButton aria-label="cart" className={classes.cartButton}>
+                  <IconButton aria-label="cart" className={classes.cartButton} onClick={() => history.push("/cart")} >
                     <StyledBadge badgeContent={cartItems?.items?.length} color="secondary">
                       <ShoppingCartIcon className={classes.cartIcon} />
                     </StyledBadge>

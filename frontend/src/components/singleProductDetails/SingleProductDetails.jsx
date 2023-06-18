@@ -86,7 +86,9 @@ const SingleProductDetails = () => {
 
         }
         if (isAddToCartSuccess) {
-            dispatch(getCartAction({ userId: user?._id }))
+            if (user?._id) {
+                dispatch(getCartAction({ userId: user?._id }))
+            }
         }
     }, [isAddToCartSuccess, isAddToCartError, dispatch, user?._id])
 

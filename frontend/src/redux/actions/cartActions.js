@@ -12,6 +12,8 @@ export const getCartAction = ({ userId }) => async (dispatch) => {
             type: GET_CART_SUCCESS,
             payload: response.data,
         });
+
+
     } catch (error) {
         dispatch({
             type: GET_CART_FAILURE,
@@ -56,7 +58,7 @@ export const removeCartItem = (userId, itemId) => async (dispatch) => {
     }
 };
 
-export const increaseQuantityAction = (userId, productId) => async (dispatch) => {
+export const increaseQuantityAction = ({ userId, productId }) => async (dispatch) => {
     try {
         dispatch({ type: INCREASE_CART_ITEM_REQUEST });
 
@@ -66,6 +68,7 @@ export const increaseQuantityAction = (userId, productId) => async (dispatch) =>
             type: INCREASE_CART_ITEM_SUCCESS,
             payload: response.data,
         });
+        dispatch(getCartAction({ userId }))
     } catch (error) {
         dispatch({
             type: INCREASE_CART_ITEM_FAILURE,
@@ -74,7 +77,7 @@ export const increaseQuantityAction = (userId, productId) => async (dispatch) =>
     }
 };
 
-export const decreaseQuantityAction = (userId, productId) => async (dispatch) => {
+export const decreaseQuantityAction = ({ userId, productId }) => async (dispatch) => {
     try {
         dispatch({ type: DECREASE_CART_ITEM_REQUEST });
 
@@ -84,6 +87,7 @@ export const decreaseQuantityAction = (userId, productId) => async (dispatch) =>
             type: DECREASE_CART_ITEM_SUCCESS,
             payload: response.data,
         });
+        dispatch(getCartAction({ userId }))
     } catch (error) {
         dispatch({
             type: DECREASE_CART_ITEM_FAILURE,
