@@ -14,6 +14,7 @@ import UpdateProfile from "./components/user/updateProfile/UpdateProfile";
 import UpdatePassword from "./components/user/updatePassword/UpdatePassword";
 import ForgotPassword from "./components/user/forgotPassword/ForgotPassword";
 import NewPassword from "./components/user/newPassword/NewPassword";
+import Cart from "./components/cart/Cart";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -62,6 +63,7 @@ const App = () => {
         <Route path="/register" component={Register} />
         <Route path="/password/forgot" component={ForgotPassword} exact />
         <Route path="/password/reset/:token" component={NewPassword} exact />
+        <Route path="/cart" component={Cart} exact />
         <ProtectedRoute path="/profile" component={Profile} exact />
         <ProtectedRoute path="/profile/update" component={UpdateProfile} exact />
         <ProtectedRoute path="/password/update" component={UpdatePassword} exact />

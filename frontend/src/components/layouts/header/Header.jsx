@@ -24,6 +24,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { logoutAction } from '../../../redux/actions/userActions';
 import { LOGOUT_USER_RESET } from '../../../redux/actionTypes/userTypes';
+import { getCartAction } from '../../../redux/actions/cartActions';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -48,6 +49,9 @@ const Header = ({ search, setSearch, category, price, ratings, setPage }) => {
   const { isLoading } = useSelector((state) => state.getProducts);
 
   const { isAuthenticated, user, logout: { isSuccess, isError, error } } = useSelector(state => state.auth);
+
+  const { getCart: { cartItems } } = useSelector((state) => state.cart);
+
 
 
   const [open, setOpen] = React.useState(false);
@@ -93,6 +97,10 @@ const Header = ({ search, setSearch, category, price, ratings, setPage }) => {
 
     }
   }, [dispatch, isAuthenticated, isError, isSuccess]);
+
+  useEffect(() => {
+    dispatch(getCartAction({ userId: user?._id }))
+  }, [dispatch, user])
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -247,7 +255,7 @@ const Header = ({ search, setSearch, category, price, ratings, setPage }) => {
                 }
                 <div>
                   <IconButton aria-label="cart" className={classes.cartButton}>
-                    <StyledBadge badgeContent={4} color="secondary">
+                    <StyledBadge badgeContent={cartItems?.items?.length} color="secondary">
                       <ShoppingCartIcon className={classes.cartIcon} />
                     </StyledBadge>
                   </IconButton>

@@ -3,13 +3,15 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { getProductsReducer, getSingleProductDetailsReducer } from "./reducers/productReducers";
 import { authReducer, forgotPasswordReducer, userReducer } from "./reducers/userReducer";
+import { cartReducer } from "./reducers/cartReducer";
 
 const reducer = combineReducers({
   getProducts: getProductsReducer,
   getSingleProductDetails: getSingleProductDetailsReducer,
   auth: authReducer,
   user: userReducer,
-  forgotPassword: forgotPasswordReducer
+  forgotPassword: forgotPasswordReducer,
+  cart: cartReducer,
 });
 
 const middlware = [thunk];

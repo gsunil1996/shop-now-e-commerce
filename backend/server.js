@@ -10,6 +10,7 @@ const fileUpload = require('express-fileupload')
 const productRoutes = require("./routes/productRoutes");
 const authRoutes = require("./routes/authRoutes");
 const orderRoutes = require("./routes/orderRoutes");
+const cartRoutes = require('./routes/cartRoutes');
 
 // Handle Uncaught exceptions
 process.on("uncaughtException", (err) => {
@@ -36,6 +37,7 @@ app.use(fileUpload());
 app.use("/api/v1", productRoutes);
 app.use("/api/v1", authRoutes);
 app.use("/api/v1", orderRoutes);
+app.use('/api/v1', cartRoutes);
 
 // middleware to handle errors
 app.use(errorMiddleware);
