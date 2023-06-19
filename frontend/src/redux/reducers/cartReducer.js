@@ -19,6 +19,7 @@ import {
     REMOVE_CART_ITEM_REQUEST,
     REMOVE_CART_ITEM_RESET,
     REMOVE_CART_ITEM_SUCCESS,
+    SAVE_SHIPPING_INFO,
 } from '../actionTypes/cartTypes';
 
 const initialState = {
@@ -53,7 +54,10 @@ const initialState = {
         isError: false,
         error: null,
         isSuccess: false,
-    }
+    },
+    shippingInfo: localStorage.getItem('shippingInfo')
+        ? JSON.parse(localStorage.getItem('shippingInfo'))
+        : {}
 };
 
 export const cartReducer = (state = initialState, action) => {
@@ -279,6 +283,12 @@ export const cartReducer = (state = initialState, action) => {
                     error: null,
                     isSuccess: false,
                 }
+            }
+
+        case SAVE_SHIPPING_INFO:
+            return {
+                ...state,
+                shippingInfo: action.payload
             }
 
         default:

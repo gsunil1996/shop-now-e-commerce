@@ -6,6 +6,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import { Card, CardContent, Grid } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import { useHistory } from 'react-router-dom';
 
 
 
@@ -15,6 +16,7 @@ const Cart = () => {
     const { getCart: { isLoading, isError, error, isSuccess, cartItems } } = useSelector((state) => state.cart);
     const { user } = useSelector(state => state.auth);
     console.log("cartItems", cartItems)
+    const history = useHistory();
 
     useEffect(() => {
         if (user?._id) {
@@ -125,6 +127,7 @@ const Cart = () => {
                                                         variant="contained"
                                                         size='large'
                                                         style={{ background: "#FA9C23", color: "#fff" }}
+                                                        onClick={() => history.push("/shipping")}
                                                     >
                                                         Checkout
                                                     </Button>

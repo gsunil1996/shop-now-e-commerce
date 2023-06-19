@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ADD_TO_CART_FAILURE, ADD_TO_CART_REQUEST, ADD_TO_CART_SUCCESS, DECREASE_CART_ITEM_FAILURE, DECREASE_CART_ITEM_REQUEST, DECREASE_CART_ITEM_SUCCESS, GET_CART_FAILURE, GET_CART_REQUEST, GET_CART_SUCCESS, INCREASE_CART_ITEM_FAILURE, INCREASE_CART_ITEM_REQUEST, INCREASE_CART_ITEM_SUCCESS, REMOVE_CART_ITEM_FAILURE, REMOVE_CART_ITEM_REQUEST, REMOVE_CART_ITEM_SUCCESS } from "../actionTypes/cartTypes";
+import { ADD_TO_CART_FAILURE, ADD_TO_CART_REQUEST, ADD_TO_CART_SUCCESS, DECREASE_CART_ITEM_FAILURE, DECREASE_CART_ITEM_REQUEST, DECREASE_CART_ITEM_SUCCESS, GET_CART_FAILURE, GET_CART_REQUEST, GET_CART_SUCCESS, INCREASE_CART_ITEM_FAILURE, INCREASE_CART_ITEM_REQUEST, INCREASE_CART_ITEM_SUCCESS, REMOVE_CART_ITEM_FAILURE, REMOVE_CART_ITEM_REQUEST, REMOVE_CART_ITEM_SUCCESS, SAVE_SHIPPING_INFO } from "../actionTypes/cartTypes";
 
 export const getCartAction = ({ userId }) => async (dispatch) => {
 
@@ -123,3 +123,14 @@ export const decreaseQuantityAction = ({ userId, productId }) => async (dispatch
         });
     }
 };
+
+export const saveShippingInfo = (data) => async (dispatch) => {
+
+    dispatch({
+        type: SAVE_SHIPPING_INFO,
+        payload: data
+    })
+
+    localStorage.setItem('shippingInfo', JSON.stringify(data))
+
+}
