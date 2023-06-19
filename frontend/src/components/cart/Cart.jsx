@@ -137,7 +137,7 @@ const Cart = () => {
                             </Grid>
                         </Grid>
                     </div>
-                ) : ""
+                ) : (<div style={{ textAlign: "center" }} > <h1>No Products Found</h1> </div>)
             }
         </div >
     )

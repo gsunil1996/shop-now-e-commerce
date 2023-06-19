@@ -9,6 +9,7 @@ import {
     DECREASE_CART_ITEM_SUCCESS,
     GET_CART_FAILURE,
     GET_CART_REQUEST,
+    GET_CART_RESET,
     GET_CART_SUCCESS,
     INCREASE_CART_ITEM_FAILURE,
     INCREASE_CART_ITEM_REQUEST,
@@ -90,6 +91,18 @@ export const cartReducer = (state = initialState, action) => {
                     isLoading: false,
                     isError: true,
                     error: action.payload,
+                }
+            }
+
+        case GET_CART_RESET:
+            return {
+                ...state,
+                getCart: {
+                    cartItems: null,
+                    isLoading: false,
+                    isError: false,
+                    error: null,
+                    isSuccess: false,
                 }
             }
 

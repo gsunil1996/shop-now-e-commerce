@@ -25,6 +25,7 @@ import MuiAlert from '@material-ui/lab/Alert';
 import { logoutAction } from '../../../redux/actions/userActions';
 import { LOGOUT_USER_RESET } from '../../../redux/actionTypes/userTypes';
 import { getCartAction } from '../../../redux/actions/cartActions';
+import { GET_CART_RESET } from '../../../redux/actionTypes/cartTypes';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -144,6 +145,7 @@ const Header = ({ search, setSearch, category, price, ratings, setPage }) => {
   const handleLogout = (event) => {
     handleClose(event)
     dispatch(logoutAction());
+    dispatch({ type: GET_CART_RESET });
   }
 
   const handleProfile = (event) => {
