@@ -7,7 +7,7 @@ import { Card, CardContent, Grid } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { useHistory } from 'react-router-dom';
-
+import { Link } from 'react-router-dom'
 
 
 const Cart = () => {
@@ -44,13 +44,19 @@ const Cart = () => {
                                             {console.log("ksjdbfodspi", item?.productId?.name)}
                                             <CardContent>
                                                 <div className={classes.cardContainer} >
-                                                    <div>
-                                                        <img src={item?.productId?.images[0]?.url} alt="" style={{ maxWidth: "200px", maxHeight: "150px" }} />
+                                                    <Link to={`/product/${item?.productId?._id}`}>
+                                                        <div>
+                                                            <img src={item?.productId?.images[0]?.url} alt="" style={{ maxWidth: "200px", maxHeight: "150px" }} />
+                                                        </div>
+                                                    </Link>
+
+
+                                                    <div className={classes.text} >
+                                                        <Link to={`/product/${item?.productId?._id}`} style={{ textDecoration: "none", color: "#000" }} >
+                                                            {item?.productId?.name}
+                                                        </Link>
                                                     </div>
 
-                                                    <div className={classes.text}>
-                                                        {item?.productId?.name}
-                                                    </div>
 
                                                     <div>
                                                         <h2 style={{ color: "#FA9C23" }}> {item?.productId?.price}</h2>

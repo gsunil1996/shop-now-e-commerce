@@ -65,8 +65,7 @@ const App = () => {
         <Route path="/password/forgot" component={ForgotPassword} exact />
         <Route path="/password/reset/:token" component={NewPassword} exact />
         <Route path="/cart" component={Cart} exact />
-        <Route path="/shipping" component={Shipping} />
-        {/* <ProtectedRoute path="/shipping" component={Shipping} /> */}
+        <ProtectedRoute path="/shipping" component={Shipping} />
         <ProtectedRoute path="/profile" component={Profile} exact />
         <ProtectedRoute path="/profile/update" component={UpdateProfile} exact />
         <ProtectedRoute path="/password/update" component={UpdatePassword} exact />
