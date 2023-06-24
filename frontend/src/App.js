@@ -16,6 +16,8 @@ import ForgotPassword from "./components/user/forgotPassword/ForgotPassword";
 import NewPassword from "./components/user/newPassword/NewPassword";
 import Cart from "./components/cart/Cart";
 import Shipping from "./components/shipping/Shipping";
+import Payment from "./components/payment/Payment";
+import ConfirmOrder from "./components/confirmOrder/ConfirmOrder";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -67,6 +69,8 @@ const App = () => {
         <Route path="/cart" component={Cart} exact />
         <ProtectedRoute path="/shipping" component={Shipping} />
         <ProtectedRoute path="/profile" component={Profile} exact />
+        <ProtectedRoute path="/confirm" component={ConfirmOrder} exact />
+        <Route path="/payment" component={Payment} />
         <ProtectedRoute path="/profile/update" component={UpdateProfile} exact />
         <ProtectedRoute path="/password/update" component={UpdatePassword} exact />
         <Route path="*" component={PageNotFound} />

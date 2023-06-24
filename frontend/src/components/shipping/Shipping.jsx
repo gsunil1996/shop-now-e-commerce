@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import useStyles from "./ShippingStyles";
 import { useDispatch, useSelector } from 'react-redux';
 import { countries } from 'countries-list'
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
@@ -14,7 +12,6 @@ import Grid from '@material-ui/core/Grid';
 import { saveShippingInfo } from '../../redux/actions/cartActions';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import CustomizedSteppers from '../stepper/CustomizedSteppers';
@@ -23,24 +20,25 @@ import CustomizedSteppers from '../stepper/CustomizedSteppers';
 const Shipping = () => {
     const classes = useStyles();
     const { shippingInfo } = useSelector((state) => state.cart);
-    const countriesList = Object.values(countries)
+    // const countriesList = Object.values(countries)
+    const [name, setName] = useState(shippingInfo.name)
     const [address, setAddress] = useState(shippingInfo.address)
     const [city, setCity] = useState(shippingInfo.city)
     const [postalCode, setPostalCode] = useState(shippingInfo.postalCode)
     const [phoneNo, setPhoneNo] = useState(shippingInfo.phoneNo)
-    const [country, setCountry] = useState(shippingInfo.country)
+    // const [country, setCountry] = useState(shippingInfo.country)
 
 
-    const handleChange = (event) => {
-        setCountry(event.target.value);
-    };
+    // const handleChange = (event) => {
+    //     setCountry(event.target.value);
+    // };
 
     const dispatch = useDispatch();
     const history = useHistory();
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        dispatch(saveShippingInfo({ address, city, phoneNo, postalCode, country }))
+        dispatch(saveShippingInfo({ name, address, city, phoneNo, postalCode }))
         history.push('/confirm')
     }
 
@@ -59,6 +57,19 @@ const Shipping = () => {
                             <CardContent>
                                 <div className={classes.title}>Shipping Info</div>
                                 <form onSubmit={handleSubmit}>
+                                    <div className={classes.formField}>
+                                        <TextField
+                                            id="outlined-basic"
+                                            label="Name"
+                                            variant="outlined"
+                                            type="text"
+                                            fullWidth
+                                            required
+                                            value={name}
+                                            onChange={(e) => setName(e.target.value)}
+                                        />
+                                    </div>
+
                                     <div className={classes.formField}>
                                         <TextField
                                             id="outlined-basic"
@@ -114,7 +125,7 @@ const Shipping = () => {
                                         />
                                     </div>
 
-                                    <FormControl variant="outlined" fullWidth required style={{ marginTop: "20px" }} >
+                                    {/* <FormControl variant="outlined" fullWidth required style={{ marginTop: "20px" }} >
                                         <InputLabel id="demo-simple-select-outlined-label">
                                             Country
                                         </InputLabel>
@@ -130,7 +141,7 @@ const Shipping = () => {
                                                 <MenuItem key={country.name} value={country.name}> {country.name}</MenuItem>
                                             ))}
                                         </Select>
-                                    </FormControl>
+                                    </FormControl> */}
 
                                     <div className={classes.formField}>
                                         <Button

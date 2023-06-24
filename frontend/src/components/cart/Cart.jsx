@@ -15,8 +15,22 @@ const Cart = () => {
     const dispatch = useDispatch();
     const { getCart: { isLoading, isError, error, isSuccess, cartItems } } = useSelector((state) => state.cart);
     const { user } = useSelector(state => state.auth);
-    console.log("cartItems", cartItems)
+    // console.log("cartItems", cartItems)
     const history = useHistory();
+
+    const [shippingPrice, setShippingPrice] = useState("");
+    const [taxPrice, setTaxPrice] = useState("");
+    const [totalPrice, setTotalPrice] = useState("");
+
+    useEffect(() => {
+        setShippingPrice(cartItems?.totalPrice == 0 ? 0 : cartItems?.totalPrice > 500 ? 0 : 100)
+        setTaxPrice(Number((0.05 * cartItems?.totalPrice).toFixed(2)))
+
+    }, [cartItems])
+
+    useEffect(() => {
+        setTotalPrice(Number(cartItems?.totalPrice) + Number(shippingPrice) + Number(taxPrice))
+    }, [cartItems, shippingPrice, taxPrice])
 
     useEffect(() => {
         if (user?._id) {
@@ -109,24 +123,39 @@ const Cart = () => {
                             <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
                                 <div>
                                     <h2>
-                                        Summary
+                                        Price Details
                                     </h2>
                                     <div>
                                         <Card style={{ boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px", background: "#F2EDD7FF", color: "#755139FF" }}>
                                             <CardContent>
                                                 <div style={{ textAlign: "center" }} >
-                                                    <h3>Price Details</h3>
+                                                    <h3>Total Items: {cartItems?.totalItems}</h3>
                                                     <hr />
-                                                    <div style={{ display: "flex", justifyContent: "center", gap: "20px" }} >
-                                                        <h4 style={{ marginBottom: "0px" }} >Total Items:</h4>
-                                                        <h4 style={{ marginBottom: "0px" }}>{cartItems?.totalItems}</h4>
+
+                                                    <div style={{ display: "flex", justifyContent: "space-between", gap: "20px" }} >
+                                                        <h4 style={{ marginBottom: "0px" }} >Items Price:</h4>
+                                                        <h4 style={{ marginBottom: "0px" }}>{cartItems?.totalPrice}</h4>
                                                     </div>
-                                                    <div style={{ display: "flex", justifyContent: "center", gap: "20px" }} >
+
+                                                    <div style={{ display: "flex", justifyContent: "space-between", gap: "20px" }} >
+                                                        <h4 style={{ marginBottom: "0px" }} >Shipping Price:</h4>
+                                                        <h4 style={{ marginBottom: "0px" }}>{shippingPrice}</h4>
+                                                    </div>
+
+                                                    <div style={{ display: "flex", justifyContent: "space-between", gap: "20px" }} >
+                                                        <h4 style={{ marginBottom: "0px" }} >Tax:</h4>
+                                                        <h4 style={{ marginBottom: "0px" }}>{taxPrice}</h4>
+                                                    </div>
+
+
+                                                    <div style={{ display: "flex", justifyContent: "space-between", gap: "20px", borderTopStyle: 'dotted', marginTop: "10px" }} >
                                                         <h4>Total Amount:</h4>
-                                                        <h4>{cartItems?.totalPrice}</h4>
+                                                        <h4>{totalPrice}</h4>
                                                     </div>
 
                                                 </div>
+
+
 
                                                 <div style={{ display: "flex", justifyContent: "center" }} >
                                                     <Button
@@ -138,6 +167,8 @@ const Cart = () => {
                                                         Checkout
                                                     </Button>
                                                 </div>
+
+
 
                                             </CardContent>
                                         </Card>

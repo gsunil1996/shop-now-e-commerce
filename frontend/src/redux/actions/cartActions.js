@@ -40,24 +40,6 @@ export const addToCartAction = ({ userId, products }) => async (dispatch) => {
     }
 };
 
-// export const removeCartItem = ({ userId, itemId }) => async (dispatch) => {
-//     try {
-//         dispatch({ type: REMOVE_CART_ITEM_REQUEST });
-
-//         const response = await axios.delete('http://localhost:4000/api/v1/cart/remove', { userId, itemId }, { withCredentials: true });
-//         dispatch({
-//             type: REMOVE_CART_ITEM_SUCCESS,
-//             payload: response.data,
-//         });
-//         dispatch(getCartAction({ userId }))
-//     } catch (error) {
-//         dispatch({
-//             type: REMOVE_CART_ITEM_FAILURE,
-//             payload: error.response.data.message,
-//         });
-//     }
-// };
-
 export const removeCartItem = ({ userId, itemId }) => async (dispatch) => {
     try {
         dispatch({ type: REMOVE_CART_ITEM_REQUEST });
