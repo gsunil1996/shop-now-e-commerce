@@ -11,14 +11,12 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TextField from '@material-ui/core/TextField';
-import { useHistory } from 'react-router-dom';
 
 const Payment = () => {
     const stripe = useStripe();
     const elements = useElements();
     const dispatch = useDispatch();
     const classes = useStyles();
-    const history = useHistory();
 
     const { getCart: { isLoading, isError, error, isSuccess, cartItems }, shippingInfo } = useSelector((state) => state.cart);
     const { user } = useSelector(state => state.auth);
@@ -26,7 +24,6 @@ const Payment = () => {
     const [shippingPrice, setShippingPrice] = useState("");
     const [taxPrice, setTaxPrice] = useState("");
     const [totalPrice, setTotalPrice] = useState("");
-    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         setShippingPrice(cartItems?.totalPrice == 0 ? 0 : cartItems?.totalPrice > 500 ? 0 : 100)
@@ -38,64 +35,9 @@ const Payment = () => {
         setTotalPrice(Number(cartItems?.totalPrice) + Number(shippingPrice) + Number(taxPrice))
     }, [cartItems, shippingPrice, taxPrice])
 
-    const order = {
-        orderItems: cartItems?.cart?.items,
-        shippingInfo
-    }
-
-    if (cartItems?.cart?.items) {
-        order.itemsPrice = cartItems?.totalPrice
-        order.shippingPrice = shippingPrice
-        order.taxPrice = taxPrice
-        order.totalPrice = totalPrice
-    }
-
-    const paymentData = {
-        amount: Math.round(totalPrice * 100)
-    }
-
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        setLoading(true);
-        try {
-            const { data } = await axios.post('http://localhost:4000/api/v1/payment/process', paymentData, { withCredentials: true })
-            const clientSecret = data.client_secret;
-
-            console.log("clientSecret", clientSecret);
-
-            if (!stripe || !elements) {
-                return;
-            }
-
-            const result = await stripe.confirmCardPayment(clientSecret, {
-                payment_method: {
-                    card: elements.getElement(CardNumberElement),
-                    billing_details: {
-                        name: user.name,
-                        email: user.email
-                    }
-                }
-            });
-
-            if (result.error) {
-                alert(result.error.message);
-            } else {
-
-                // The payment is processed or not
-                if (result.paymentIntent.status === 'succeeded') {
-
-                    history.push('/success')
-                } else {
-                    alert('There is some issue while payment processing')
-                }
-            }
-
-        } catch (error) {
-            alert(error?.response?.data?.message)
-        } finally {
-            setLoading(false);
-        }
-
+        alert("Submitted")
     }
 
     const options = {
@@ -117,21 +59,7 @@ const Payment = () => {
 
             <CustomizedSteppers step={2} />
 
-            <div style={{ width: "100%" }} >
-                <Card style={{ boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px", background: "#F2EDD7FF", color: "#755139FF", maxWidth: "max-content", margin: "auto", marginBottom: "30px" }}>
-                    <CardContent>
-                        <div style={{ textAlign: "center" }} >
-                            <h3>For testing purpose enter the details as below</h3>
-                            <hr />
-                            <p><b>Card Number:</b> 4000 0035 6000 0008</p>
-                            <p><b>Card Expiry:</b> Any future Month / Year: <b>eg: 12/34</b></p>
-                            <p><b>Card CVV:</b> Any three numbers: <b>eg: 567</b></p>
-                        </div>
-                    </CardContent>
-                </Card>
-            </div>
-
-            <div style={{ paddingBottom: "50px" }} >
+            <div>
                 <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }} >
                     <Grid container justifyContent='center' alignItems='center' style={{ width: "100%" }} >
                         <Grid item xs={10} sm={10} md={4} lg={4} xl={4} style={{ margin: "auto" }} >
@@ -154,7 +82,7 @@ const Payment = () => {
                                                         options: options,
                                                     },
                                                 }}
-                                                required
+                                                required // Added required attribute
                                             />
                                         </div>
 
@@ -173,7 +101,7 @@ const Payment = () => {
                                                         options: options,
                                                     },
                                                 }}
-                                                required
+                                                required // Added required attribute
                                             />
                                         </div>
 
@@ -192,7 +120,7 @@ const Payment = () => {
                                                         options: options,
                                                     },
                                                 }}
-                                                required
+                                                required // Added required attribute
                                             />
                                         </div>
 
@@ -201,7 +129,7 @@ const Payment = () => {
                                                 variant="contained"
                                                 fullWidth
                                                 size='large'
-                                                disabled={loading ? true : false}
+                                                disabled={isLoading ? true : false}
                                                 style={{
                                                     background: "#FA9C23",
                                                     color: "#fff",
@@ -209,7 +137,7 @@ const Payment = () => {
                                                 }}
                                                 type="submit"
                                             >
-                                                {loading ? <CircularProgress className={classes.loginSpinner} /> :
+                                                {isLoading ? <CircularProgress className={classes.loginSpinner} /> :
                                                     `Pay - ${totalPrice}`}
                                             </Button>
                                         </div>

@@ -18,6 +18,11 @@ import Cart from "./components/cart/Cart";
 import Shipping from "./components/shipping/Shipping";
 import Payment from "./components/payment/Payment";
 import ConfirmOrder from "./components/confirmOrder/ConfirmOrder";
+import axios from 'axios'
+
+// Payment
+import { Elements } from '@stripe/react-stripe-js'
+import { loadStripe } from '@stripe/stripe-js'
 
 const App = () => {
   const dispatch = useDispatch();
@@ -29,12 +34,22 @@ const App = () => {
   const [page, setPage] = useState(1);
 
   const { isAuthenticated } = useSelector(state => state.auth);
+  const [stripeApiKey, setStripeApiKey] = useState('');
 
   // persist user across application
   useEffect(() => {
     if (!isAuthenticated) {
       dispatch(loadUser());
     }
+
+    async function getStripApiKey() {
+      const { data } = await axios.get('http://localhost:4000/api/v1/stripeapi', { withCredentials: true });
+
+      setStripeApiKey(data.stripeApiKey)
+    }
+
+    getStripApiKey();
+
   }, [dispatch, isAuthenticated]);
 
   return (
@@ -70,7 +85,13 @@ const App = () => {
         <ProtectedRoute path="/shipping" component={Shipping} />
         <ProtectedRoute path="/profile" component={Profile} exact />
         <ProtectedRoute path="/confirm" component={ConfirmOrder} exact />
-        <Route path="/payment" component={Payment} />
+
+        {stripeApiKey &&
+          <Elements stripe={loadStripe(stripeApiKey)}>
+            <ProtectedRoute path="/payment" component={Payment} />
+          </Elements>
+        }
+
         <ProtectedRoute path="/profile/update" component={UpdateProfile} exact />
         <ProtectedRoute path="/password/update" component={UpdatePassword} exact />
         <Route path="*" component={PageNotFound} />

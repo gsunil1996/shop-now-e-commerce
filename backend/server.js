@@ -11,6 +11,9 @@ const productRoutes = require("./routes/productRoutes");
 const authRoutes = require("./routes/authRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const cartRoutes = require('./routes/cartRoutes');
+const paymentRoutes = require("./routes/paymentRoutes");
+
+require("dotenv").config();
 
 // Handle Uncaught exceptions
 process.on("uncaughtException", (err) => {
@@ -19,7 +22,7 @@ process.on("uncaughtException", (err) => {
   process.exit(1);
 });
 
-require("dotenv").config();
+
 require("./db/database");
 
 const app = express();
@@ -38,6 +41,7 @@ app.use("/api/v1", productRoutes);
 app.use("/api/v1", authRoutes);
 app.use("/api/v1", orderRoutes);
 app.use('/api/v1', cartRoutes);
+app.use('/api/v1', paymentRoutes);
 
 // middleware to handle errors
 app.use(errorMiddleware);
