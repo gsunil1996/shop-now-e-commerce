@@ -13,7 +13,7 @@ import Button from '@material-ui/core/Button';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { useDispatch, useSelector } from 'react-redux';
 import { myOrders } from '../../redux/actions/orderActions';
-
+import { useHistory } from 'react-router-dom';
 
 const columns = [
     {
@@ -58,7 +58,7 @@ const columns = [
 const ListOrders = () => {
 
     const dispatch = useDispatch();
-
+    const history = useHistory();
     const { isLoading, isError, error, isSuccess, data } = useSelector(state => state.myOrders)
 
     useEffect(() => {
@@ -67,7 +67,7 @@ const ListOrders = () => {
 
 
     const handleViewClick = (e, id) => {
-        alert(id)
+        history.push(`/order/${id}`)
     }
 
     return (

@@ -1,4 +1,4 @@
-import { CREATE_ORDER_FAIL, CREATE_ORDER_REQUEST, CREATE_ORDER_RESET, CREATE_ORDER_SUCCESS, MY_ORDERS_FAIL, MY_ORDERS_REQUEST, MY_ORDERS_RESET, MY_ORDERS_SUCCESS } from "../actionTypes/orderTypes";
+import { CREATE_ORDER_FAIL, CREATE_ORDER_REQUEST, CREATE_ORDER_RESET, CREATE_ORDER_SUCCESS, MY_ORDERS_FAIL, MY_ORDERS_REQUEST, MY_ORDERS_RESET, MY_ORDERS_SUCCESS, ORDER_DETAILS_FAIL, ORDER_DETAILS_REQUEST, ORDER_DETAILS_RESET, ORDER_DETAILS_SUCCESS } from "../actionTypes/orderTypes";
 
 const newOrderInitialState = {
     isLoading: false,
@@ -91,6 +91,56 @@ export const myOrdersReducer = (state = myOrderInitialState, action) => {
                 error: null,
                 isSuccess: false,
                 data: []
+            }
+
+        default:
+            return state;
+    }
+}
+
+const orderDetailsInitialState = {
+    isLoading: false,
+    isError: false,
+    error: null,
+    isSuccess: false,
+    order: {}
+}
+
+
+export const orderDetailsReducer = (state = orderDetailsInitialState, action) => {
+    switch (action.type) {
+
+        case ORDER_DETAILS_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+                isError: false,
+                error: null,
+                isSuccess: false,
+            }
+
+        case ORDER_DETAILS_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                isSuccess: true,
+                order: action.payload
+            }
+
+        case ORDER_DETAILS_FAIL:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
+                error: action.payload,
+            }
+        case ORDER_DETAILS_RESET:
+            return {
+                isLoading: false,
+                isError: false,
+                error: null,
+                isSuccess: false,
+                order: {}
             }
 
         default:
