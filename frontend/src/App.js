@@ -23,6 +23,9 @@ import axios from 'axios'
 // Payment
 import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
+import OrderSuccess from "./components/orderSuccess/OrderSuccess";
+import ListOrders from "./components/listOrders/ListOrders";
+import OrderDetails from "./components/orderDetails/OrderDetails";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -85,6 +88,15 @@ const App = () => {
         <ProtectedRoute path="/shipping" component={Shipping} />
         <ProtectedRoute path="/profile" component={Profile} exact />
         <ProtectedRoute path="/confirm" component={ConfirmOrder} exact />
+        <ProtectedRoute path="/success" component={OrderSuccess} />
+        <ProtectedRoute path="/profile/update" component={UpdateProfile} exact />
+        <ProtectedRoute path="/password/update" component={UpdatePassword} exact />
+
+
+        <Route path="/orders/me" component={ListOrders} exact />
+        <Route path="/order/:id" component={OrderDetails} exact />
+
+
 
         {stripeApiKey &&
           <Elements stripe={loadStripe(stripeApiKey)}>
@@ -92,9 +104,8 @@ const App = () => {
           </Elements>
         }
 
-        <ProtectedRoute path="/profile/update" component={UpdateProfile} exact />
-        <ProtectedRoute path="/password/update" component={UpdatePassword} exact />
         <Route path="*" component={PageNotFound} />
+
       </Switch>
     </div>
   );

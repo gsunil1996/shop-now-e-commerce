@@ -153,6 +153,11 @@ const Header = ({ search, setSearch, category, price, ratings, setPage }) => {
     history.push("/profile")
   }
 
+  const handleOrder = (event) => {
+    handleClose(event)
+    history.push("/orders/me")
+  }
+
 
   useEffect(() => {
     if (search == "") {
@@ -233,7 +238,7 @@ const Header = ({ search, setSearch, category, price, ratings, setPage }) => {
 
                                   {user.role == "admin" && <MenuItem onClick={handleClose}>Dashboard</MenuItem>}
 
-                                  <MenuItem onClick={handleClose}>Orders</MenuItem>
+                                  <MenuItem onClick={handleOrder}>Orders</MenuItem>
                                   <MenuItem onClick={handleProfile}>Profile</MenuItem>
                                   <MenuItem onClick={handleLogout} style={{ color: "#5C0512" }} >Logout</MenuItem>
                                 </MenuList>
