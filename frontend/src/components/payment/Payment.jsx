@@ -12,6 +12,7 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TextField from '@material-ui/core/TextField';
 import { useHistory } from 'react-router-dom';
+import { createOrder } from '../../redux/actions/orderActions';
 
 const Payment = () => {
     const stripe = useStripe();
@@ -20,7 +21,7 @@ const Payment = () => {
     const classes = useStyles();
     const history = useHistory();
 
-    const { getCart: { isLoading, isError, error, isSuccess, cartItems }, shippingInfo } = useSelector((state) => state.cart);
+    const { getCart: { cartItems }, shippingInfo } = useSelector((state) => state.cart);
     const { user } = useSelector(state => state.auth);
 
     const [shippingPrice, setShippingPrice] = useState("");
@@ -38,17 +39,6 @@ const Payment = () => {
         setTotalPrice(Number(cartItems?.totalPrice) + Number(shippingPrice) + Number(taxPrice))
     }, [cartItems, shippingPrice, taxPrice])
 
-    const order = {
-        orderItems: cartItems?.cart?.items,
-        shippingInfo
-    }
-
-    if (cartItems?.cart?.items) {
-        order.itemsPrice = cartItems?.totalPrice
-        order.shippingPrice = shippingPrice
-        order.taxPrice = taxPrice
-        order.totalPrice = totalPrice
-    }
 
     const paymentData = {
         amount: Math.round(totalPrice * 100)
@@ -57,6 +47,8 @@ const Payment = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
+
+
         try {
             const { data } = await axios.post('http://localhost:4000/api/v1/payment/process', paymentData, { withCredentials: true })
             const clientSecret = data.client_secret;
@@ -83,6 +75,21 @@ const Payment = () => {
 
                 // The payment is processed or not
                 if (result.paymentIntent.status === 'succeeded') {
+
+                    const payload = {
+                        itemsPrice: cartItems?.totalPrice,
+                        taxPrice: taxPrice,
+                        shippingPrice: shippingPrice,
+                        totalPrice: totalPrice,
+                        orderItems: cartItems?.cart?.items,
+                        shippingInfo,
+                        paymentInfo: {
+                            id: result.paymentIntent.id,
+                            status: result.paymentIntent.status
+                        }
+                    }
+
+                    dispatch(createOrder(payload))
 
                     history.push('/success')
                 } else {

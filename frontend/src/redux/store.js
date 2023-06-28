@@ -4,6 +4,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { getProductsReducer, getSingleProductDetailsReducer } from "./reducers/productReducers";
 import { authReducer, forgotPasswordReducer, userReducer } from "./reducers/userReducer";
 import { cartReducer } from "./reducers/cartReducer";
+import { newOrderReducer } from "./reducers/orderReducers";
 
 const reducer = combineReducers({
   getProducts: getProductsReducer,
@@ -12,6 +13,7 @@ const reducer = combineReducers({
   user: userReducer,
   forgotPassword: forgotPasswordReducer,
   cart: cartReducer,
+  newOrder: newOrderReducer,
 });
 
 const middlware = [thunk];
