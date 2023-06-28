@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ADD_TO_CART_FAILURE, ADD_TO_CART_REQUEST, ADD_TO_CART_SUCCESS, DECREASE_CART_ITEM_FAILURE, DECREASE_CART_ITEM_REQUEST, DECREASE_CART_ITEM_SUCCESS, GET_CART_FAILURE, GET_CART_REQUEST, GET_CART_SUCCESS, INCREASE_CART_ITEM_FAILURE, INCREASE_CART_ITEM_REQUEST, INCREASE_CART_ITEM_SUCCESS, REMOVE_CART_ITEM_FAILURE, REMOVE_CART_ITEM_REQUEST, REMOVE_CART_ITEM_SUCCESS, SAVE_SHIPPING_INFO } from "../actionTypes/cartTypes";
+import { ADD_TO_CART_FAILURE, ADD_TO_CART_REQUEST, ADD_TO_CART_SUCCESS, DECREASE_CART_ITEM_FAILURE, DECREASE_CART_ITEM_REQUEST, DECREASE_CART_ITEM_SUCCESS, GET_CART_FAILURE, GET_CART_REQUEST, GET_CART_SUCCESS, INCREASE_CART_ITEM_FAILURE, INCREASE_CART_ITEM_REQUEST, INCREASE_CART_ITEM_SUCCESS, REMOVE_ALL_CART_PRODUCTS_FAILURE, REMOVE_ALL_CART_PRODUCTS_REQUEST, REMOVE_ALL_CART_PRODUCTS_SUCCESS, REMOVE_CART_ITEM_FAILURE, REMOVE_CART_ITEM_REQUEST, REMOVE_CART_ITEM_SUCCESS, SAVE_SHIPPING_INFO } from "../actionTypes/cartTypes";
 
 export const getCartAction = ({ userId }) => async (dispatch) => {
 
@@ -116,3 +116,30 @@ export const saveShippingInfo = (data) => async (dispatch) => {
     localStorage.setItem('shippingInfo', JSON.stringify(data))
 
 }
+
+export const deleteAllCartItem = ({ userId }) => async (dispatch) => {
+    try {
+        dispatch({ type: REMOVE_ALL_CART_PRODUCTS_REQUEST });
+
+        const config = {
+            withCredentials: true,
+            data: { userId }, // Pass the payload here
+        };
+
+        const response = await axios.delete(
+            'http://localhost:4000/api/v1/cart/clear',
+            config
+        );
+
+        dispatch({
+            type: REMOVE_ALL_CART_PRODUCTS_SUCCESS,
+            payload: response.data,
+        });
+        dispatch(getCartAction({ userId }));
+    } catch (error) {
+        dispatch({
+            type: REMOVE_ALL_CART_PRODUCTS_FAILURE,
+            payload: error.response.data.message,
+        });
+    }
+};

@@ -5,7 +5,8 @@ const {
     addToCart,
     removeCartItem,
     increaseProductQuantity,
-    decreaseProductQuantity
+    decreaseProductQuantity,
+    clearCart
 } = require('../controllers/cartController');
 
 const router = express.Router();
@@ -24,5 +25,8 @@ router.patch('/cart/increase', isAuthenticatedUser, increaseProductQuantity);
 
 // Decrease product quantity in the cart
 router.patch('/cart/decrease', isAuthenticatedUser, decreaseProductQuantity);
+
+// Clear all items in the cart
+router.delete('/cart/clear', isAuthenticatedUser, clearCart);
 
 module.exports = router;

@@ -139,10 +139,32 @@ async function decreaseProductQuantity(req, res) {
     }
 }
 
+// Clear all items in the cart
+async function clearCart(req, res) {
+    const { userId } = req.body;
+
+    try {
+        const cart = await Cart.findOne({ userId });
+
+        if (!cart) {
+            return res.status(404).json({ message: 'Cart not found' });
+        }
+
+        cart.items = [];
+
+        await cart.save();
+
+        res.json(cart);
+    } catch (error) {
+        res.status(500).json({ message: 'Error clearing cart' });
+    }
+}
+
 module.exports = {
     getCart,
     addToCart,
     removeCartItem,
     increaseProductQuantity,
-    decreaseProductQuantity
+    decreaseProductQuantity,
+    clearCart
 };

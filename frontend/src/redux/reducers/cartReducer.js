@@ -15,6 +15,10 @@ import {
     INCREASE_CART_ITEM_REQUEST,
     INCREASE_CART_ITEM_RESET,
     INCREASE_CART_ITEM_SUCCESS,
+    REMOVE_ALL_CART_PRODUCTS_FAILURE,
+    REMOVE_ALL_CART_PRODUCTS_REQUEST,
+    REMOVE_ALL_CART_PRODUCTS_RESET,
+    REMOVE_ALL_CART_PRODUCTS_SUCCESS,
     REMOVE_CART_ITEM_FAILURE,
     REMOVE_CART_ITEM_REQUEST,
     REMOVE_CART_ITEM_RESET,
@@ -50,6 +54,12 @@ const initialState = {
         isSuccess: false,
     },
     decreaseQuantity: {
+        isLoading: false,
+        isError: false,
+        error: null,
+        isSuccess: false,
+    },
+    emptyCart: {
         isLoading: false,
         isError: false,
         error: null,
@@ -259,7 +269,7 @@ export const cartReducer = (state = initialState, action) => {
                 decreaseQuantity: {
                     ...state.decreaseQuantity,
                     isLoading: false,
-                    isSuccess: false,
+                    isSuccess: true,
                 }
             }
 
@@ -278,6 +288,49 @@ export const cartReducer = (state = initialState, action) => {
             return {
                 ...state,
                 decreaseQuantity: {
+                    isLoading: false,
+                    isError: false,
+                    error: null,
+                    isSuccess: false,
+                }
+            }
+
+        case REMOVE_ALL_CART_PRODUCTS_REQUEST:
+            return {
+                ...state,
+                emptyCart: {
+                    isLoading: true,
+                    isError: false,
+                    error: null,
+                    isSuccess: false,
+                }
+            }
+
+        case REMOVE_ALL_CART_PRODUCTS_SUCCESS:
+            return {
+                ...state,
+                emptyCart: {
+                    ...state.emptyCart,
+                    isLoading: false,
+                    isSuccess: true,
+                }
+            }
+
+        case REMOVE_ALL_CART_PRODUCTS_FAILURE:
+            return {
+                ...state,
+                emptyCart: {
+                    ...state.emptyCart,
+                    isLoading: false,
+                    isError: true,
+                    error: action.payload,
+                }
+            }
+
+        case REMOVE_ALL_CART_PRODUCTS_RESET:
+            return {
+                ...state,
+                emptyCart: {
                     isLoading: false,
                     isError: false,
                     error: null,

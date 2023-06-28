@@ -16,8 +16,17 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
     paymentInfo,
   } = req.body;
 
+  // Map the order items from the payload to the desired structure in the order model
+  const mappedOrderItems = orderItems.map((item) => ({
+    name: item.productId.name,
+    quantity: item.quantity,
+    image: item.productId.images[0].url,
+    price: item.productId.price,
+    product: item.productId._id,
+  }));
+
   const order = await Order.create({
-    orderItems,
+    orderItems: mappedOrderItems,
     shippingInfo,
     itemsPrice,
     taxPrice,

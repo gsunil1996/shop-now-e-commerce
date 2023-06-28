@@ -13,6 +13,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import TextField from '@material-ui/core/TextField';
 import { useHistory } from 'react-router-dom';
 import { createOrder } from '../../redux/actions/orderActions';
+import { deleteAllCartItem } from '../../redux/actions/cartActions';
+import { REMOVE_ALL_CART_PRODUCTS_RESET } from '../../redux/actionTypes/cartTypes';
 
 const Payment = () => {
     const stripe = useStripe();
@@ -21,8 +23,21 @@ const Payment = () => {
     const classes = useStyles();
     const history = useHistory();
 
-    const { getCart: { cartItems }, shippingInfo } = useSelector((state) => state.cart);
+    const { getCart: { cartItems }, shippingInfo, emptyCart: { isLoading, isError, error, isSuccess } } = useSelector((state) => state.cart);
     const { user } = useSelector(state => state.auth);
+    const { isLoading: newOrderLoading, isError: newOrderIsError, error: newOrderError, isSuccess: newOrderIsSuccess } = useSelector(state => state.newOrder)
+
+
+    useEffect(() => {
+        if (newOrderIsSuccess) {
+            dispatch(deleteAllCartItem({ userId: user?._id }))
+
+            if (isSuccess) {
+                dispatch({ type: REMOVE_ALL_CART_PRODUCTS_RESET });
+                history.push('/success')
+            }
+        }
+    }, [dispatch, newOrderIsSuccess, isSuccess, history, user])
 
     const [shippingPrice, setShippingPrice] = useState("");
     const [taxPrice, setTaxPrice] = useState("");
@@ -90,8 +105,6 @@ const Payment = () => {
                     }
 
                     dispatch(createOrder(payload))
-
-                    history.push('/success')
                 } else {
                     alert('There is some issue while payment processing')
                 }
@@ -132,7 +145,7 @@ const Payment = () => {
                             <hr />
                             <p><b>Card Number:</b> 4000 0035 6000 0008</p>
                             <p><b>Card Expiry:</b> Any future Month / Year: <b>eg: 12/34</b></p>
-                            <p><b>Card CVV:</b> Any three numbers: <b>eg: 567</b></p>
+                            <p><b>Card CVV:</b> Any three numbers: <b>eg: 111</b></p>
                         </div>
                     </CardContent>
                 </Card>
