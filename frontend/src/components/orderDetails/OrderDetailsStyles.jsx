@@ -13,6 +13,8 @@ const useStyles = makeStyles((theme) => ({
     productCount: {
         fontSize: "18px",
         fontWeight: 700,
+        display: "flex",
+        justifyContent: "center"
     },
     text: {
         maxWidth: "20%",

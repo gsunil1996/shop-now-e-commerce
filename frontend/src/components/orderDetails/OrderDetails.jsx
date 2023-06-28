@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +10,20 @@ import Button from '@material-ui/core/Button';
 import useStyles from "./OrderDetailsStyles";
 import { Link } from 'react-router-dom';
 import { Alert, AlertTitle } from '@material-ui/lab';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import CloseIcon from '@material-ui/icons/Close';
+import Rating from '@material-ui/lab/Rating';
+import TextField from '@material-ui/core/TextField';
+import { newReview } from '../../redux/actions/productActions';
+import { CircularProgress } from '@material-ui/core';
+import { NEW_REVIEW_RESET } from '../../redux/actionTypes/productTypes';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+function Alerts(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const OrderDetails = () => {
     const { id } = useParams();
@@ -17,17 +31,84 @@ const OrderDetails = () => {
     const history = useHistory();
     const classes = useStyles();
 
+    const [open, setOpen] = React.useState(false);
+    const [productId, setProductId] = useState("");
+    const [comment, setComment] = useState("");
+    const [rating, setRating] = useState(null);
+
+    const handleClickOpen = (e, id) => {
+        setOpen(true);
+        setProductId(id)
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+        setRating(null);
+        setComment("");
+    };
 
     const { isLoading, isError, error, isSuccess, order } = useSelector(state => state.orderDetails)
+    const { isLoading: reviewisLoading, isError: reviewIsError, error: reviewError, isSuccess: reviewIsSuccess } = useSelector(state => state.newReview)
+
+    const [openSuccessAlert, setOpenSuccessAlert] = useState(false);
+    const [openFailureAlert, setOpenFailureAlert] = useState(false);
+
+    const handleClickOpenFailureAlert = () => {
+        setOpenFailureAlert(true)
+    }
+
+    const handleCloseFailureAlert = () => {
+        setOpenFailureAlert(false)
+    }
+
+    const handleClickOpenSuccessAlert = () => {
+        setOpenSuccessAlert(true);
+    };
+
+    const handleCloseSuccessAlert = () => {
+        setOpenSuccessAlert(false);
+    };
 
     useEffect(() => {
         dispatch(getOrderDetails(id));
     }, [])
 
+    useEffect(() => {
+        if (reviewIsSuccess) {
+            handleClose()
+
+            handleClickOpenSuccessAlert()
+
+            setTimeout(() => {
+                handleCloseSuccessAlert()
+            }, 1000)
+
+            setTimeout(() => {
+                dispatch({ type: NEW_REVIEW_RESET });
+            }, 2000)
+        }
+
+        if (reviewIsError) {
+            handleClickOpenFailureAlert()
+            setTimeout(() => {
+                handleCloseFailureAlert()
+            }, 1000)
+        }
+    }, [dispatch, reviewIsError, reviewIsSuccess])
+
     let totalQuantity;
 
     if (order?.orderItems) {
         totalQuantity = order?.orderItems.reduce((total, item) => total + item.quantity, 0);
+    }
+
+    const handleReviewSubmit = () => {
+        const payload = {
+            rating,
+            comment,
+            productId
+        }
+        dispatch(newReview(payload))
     }
 
 
@@ -108,7 +189,7 @@ const OrderDetails = () => {
 
 
                                                         <div className={classes.text} >
-                                                            <Link to={`/product/${item?.produc}`} style={{ textDecoration: "none", color: "#000" }} >
+                                                            <Link to={`/product/${item?.product}`} style={{ textDecoration: "none", color: "#000" }} >
                                                                 {item?.name}
                                                             </Link>
                                                         </div>
@@ -120,8 +201,21 @@ const OrderDetails = () => {
 
                                                         <div className={classes.productMain} >
                                                             <div>
-                                                                <div className={classes.productCount}> Quantity: {item?.quantity}</div>
-
+                                                                <div className={classes.productCount}>
+                                                                    Quantity: {item?.quantity}
+                                                                </div>
+                                                                <div style={{ display: "flex", justifyContent: "center" }} >
+                                                                    <Button
+                                                                        variant="contained"
+                                                                        size="large"
+                                                                        style={{ background: "#FA9C23", color: "#fff", marginTop: "30px" }}
+                                                                        onClick={(event) =>
+                                                                            handleClickOpen(event, item?.product)
+                                                                        }
+                                                                    >
+                                                                        Submit Review
+                                                                    </Button>
+                                                                </div>
                                                             </div>
 
                                                         </div>
@@ -177,6 +271,74 @@ const OrderDetails = () => {
                 ) : ""
                 }
             </div>
+
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                fullWidth={true}
+                maxWidth="sm"
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogContent style={{ padding: "20px" }} >
+                    <div style={{ display: "flex", justifyContent: "flex-end" }} >
+                        <CloseIcon style={{ cursor: "pointer" }} onClick={handleClose} />
+                    </div>
+                    <div>
+                        <div>
+                            <h3>Ratings</h3>
+                            <Rating
+                                name="pristine"
+                                precision={0.1}
+                                value={rating}
+                                onChange={(event, newValue) => {
+                                    setRating(newValue);
+                                }}
+                            />
+                        </div>
+                        <hr />
+                        <div style={{ marginTop: "20px" }} >
+                            <TextField
+                                id="outlined-multiline-static"
+                                label="Review"
+                                multiline
+                                rows={4}
+                                value={comment}
+                                variant="outlined"
+                                fullWidth
+                                onChange={(e) => setComment(e.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <div style={{ display: "flex", justifyContent: "center" }} >
+                                <Button
+                                    variant="contained"
+                                    size="large"
+                                    disabled={reviewisLoading ? true : false}
+                                    style={{ background: "#FA9C23", color: "#fff", marginTop: "30px" }}
+                                    onClick={handleReviewSubmit}
+                                >
+                                    {reviewisLoading ? <CircularProgress style={{ color: "#fff" }} /> : "Submit Review"}
+
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+                </DialogContent>
+            </Dialog>
+
+            <Snackbar open={openSuccessAlert} autoHideDuration={6000} onClose={handleCloseSuccessAlert}>
+                <Alerts onClose={handleCloseSuccessAlert} severity="success">
+                    Review Submitted Successfully!
+                </Alerts>
+            </Snackbar>
+
+            <Snackbar open={openFailureAlert} autoHideDuration={6000} onClose={handleCloseFailureAlert}>
+                <Alerts onClose={handleCloseFailureAlert} severity="error">
+                    {reviewError}
+                </Alerts>
+            </Snackbar>
+
         </div>
     )
 }

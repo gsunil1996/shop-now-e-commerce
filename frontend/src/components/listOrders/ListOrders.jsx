@@ -172,7 +172,7 @@ const ListOrders = () => {
                                                                 }
                                                                 style={{ background: "#FA9C23", color: "#fff" }}
                                                             >
-                                                                View
+                                                                View Order Details
                                                             </Button>
 
                                                         </TableCell>

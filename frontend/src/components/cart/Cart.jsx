@@ -161,6 +161,7 @@ const Cart = () => {
                                                     <Button
                                                         variant="contained"
                                                         size='large'
+                                                        disabled={totalPrice == 0 ? true : false}
                                                         style={{ background: "#FA9C23", color: "#fff" }}
                                                         onClick={() => history.push("/shipping")}
                                                     >

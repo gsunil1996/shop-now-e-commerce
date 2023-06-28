@@ -150,7 +150,7 @@ const useStyles = makeStyles((theme) => ({
     },
     reviewRating: {
         display: "flex",
-        justifyContent: "center"
+        justifyContent: "center",
     },
 }));
 

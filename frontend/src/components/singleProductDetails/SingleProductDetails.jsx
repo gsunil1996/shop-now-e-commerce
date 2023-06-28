@@ -164,11 +164,11 @@ const SingleProductDetails = () => {
                                         <div className={classes.descriptionTitle}>Description:</div>
                                         <div>{data?.product?.description}</div>
                                     </div>
-                                    <div className={classes.loginAlert}>
+                                    {/* <div className={classes.loginAlert}>
                                         <Alert severity="error">
                                             <AlertTitle>Login to post your review.</AlertTitle>
                                         </Alert>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </Grid>
                         </Grid>
@@ -177,15 +177,15 @@ const SingleProductDetails = () => {
                                 <div className={classes.reviewsTitle}>Other's Reviews:</div>
                                 <hr />
                                 <div className={classes.reviewsContent} >
-                                    <div>
+                                    <div style={{ display: "flex", gap: "20px", flexWrap: 'wrap' }} >
                                         {data?.product?.reviews.map((item) => (
-                                            <React.Fragment key={item.id}>
+                                            <div key={item.id} style={{ marginBottom: "20px" }} >
                                                 <div className={classes.reviewRating} >
                                                     <Rating name="read-only" value={Number(item.rating)} precision={0.1} readOnly />
                                                 </div>
                                                 <div className={classes.reviewName}>{`by: ${item.name}`}</div>
                                                 <div className={classes.reviewComment}>{item.comment}</div>
-                                            </React.Fragment>
+                                            </div>
                                         ))}
                                     </div>
                                 </div>

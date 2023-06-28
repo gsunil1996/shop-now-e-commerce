@@ -1,4 +1,4 @@
-import { GET_PRODUCTS_REQUEST, GET_PRODUCTS_SUCCESS, GET_PRODUCTS_FAILURE, GET_SINGLE_PRODUCT_REQUEST, GET_SINGLE_PRODUCT_SUCCESS, GET_SINGLE_PRODUCT_FAILURE } from "../actionTypes/productTypes";
+import { GET_PRODUCTS_REQUEST, GET_PRODUCTS_SUCCESS, GET_PRODUCTS_FAILURE, GET_SINGLE_PRODUCT_REQUEST, GET_SINGLE_PRODUCT_SUCCESS, GET_SINGLE_PRODUCT_FAILURE, NEW_REVIEW_REQUEST, NEW_REVIEW_SUCCESS, NEW_REVIEW_FAIL, NEW_REVIEW_RESET } from "../actionTypes/productTypes";
 
 // get products
 const getProductsInitialState = {
@@ -74,6 +74,53 @@ export const getSingleProductDetailsReducer = (state = getSingleProductInitialSt
                 isLoading: false,
                 isError: true,
                 error: action.payload,
+            }
+
+        default:
+            return state
+    }
+}
+
+const newReviewInitialState = {
+    isLoading: false,
+    isError: false,
+    error: "",
+    isSuccess: false,
+}
+
+export const newReviewReducer = (state = newReviewInitialState, action) => {
+    switch (action.type) {
+
+        case NEW_REVIEW_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+                isError: false,
+                error: "",
+                isSuccess: false,
+            }
+
+        case NEW_REVIEW_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                isSuccess: true,
+            }
+
+        case NEW_REVIEW_FAIL:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
+                error: action.payload,
+            }
+
+        case NEW_REVIEW_RESET:
+            return {
+                isLoading: false,
+                isError: false,
+                error: "",
+                isSuccess: false,
             }
 
         default:
