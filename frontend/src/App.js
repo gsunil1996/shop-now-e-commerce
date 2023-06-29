@@ -36,7 +36,7 @@ const App = () => {
   const location = useLocation();
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
-  const [price, setPrice] = useState([1, 3000]);
+  const [price, setPrice] = useState([1, 400000]);
   const [ratings, setRatings] = useState(0);
   const [page, setPage] = useState(1);
 

@@ -9,6 +9,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { useHistory } from "react-router-dom";
 import { allUsers } from '../../../redux/actions/userActions';
 import { allOrders } from '../../../redux/actions/orderActions';
+import { Helmet } from 'react-helmet';
 
 
 const Dashboard = () => {
@@ -26,6 +27,9 @@ const Dashboard = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>Dashboard</title>
+            </Helmet>
             <div>
                 <Card style={{ background: "#1976D2", color: "#fff" }} >
                     <CardContent>

@@ -41,6 +41,8 @@ const Home = ({ search, category, setCategory, price, setPrice, ratings, setRati
 
   const { data, isLoading, isError, error, isSuccess } = useSelector((state) => state.getProducts);
 
+  console.log("sdfsdfsdf", data?.products)
+
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
