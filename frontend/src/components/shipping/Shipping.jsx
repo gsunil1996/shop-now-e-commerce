@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import useStyles from "./ShippingStyles";
 import { useDispatch, useSelector } from 'react-redux';
-import { countries } from 'countries-list'
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
@@ -10,28 +9,17 @@ import CardContent from '@material-ui/core/CardContent';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import { saveShippingInfo } from '../../redux/actions/cartActions';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import CustomizedSteppers from '../stepper/CustomizedSteppers';
 
 
 const Shipping = () => {
     const classes = useStyles();
     const { shippingInfo } = useSelector((state) => state.cart);
-    // const countriesList = Object.values(countries)
     const [name, setName] = useState(shippingInfo.name)
     const [address, setAddress] = useState(shippingInfo.address)
     const [city, setCity] = useState(shippingInfo.city)
     const [postalCode, setPostalCode] = useState(shippingInfo.postalCode)
     const [phoneNo, setPhoneNo] = useState(shippingInfo.phoneNo)
-    // const [country, setCountry] = useState(shippingInfo.country)
-
-
-    // const handleChange = (event) => {
-    //     setCountry(event.target.value);
-    // };
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -124,24 +112,6 @@ const Shipping = () => {
                                             onChange={(e) => setPostalCode(e.target.value)}
                                         />
                                     </div>
-
-                                    {/* <FormControl variant="outlined" fullWidth required style={{ marginTop: "20px" }} >
-                                        <InputLabel id="demo-simple-select-outlined-label">
-                                            Country
-                                        </InputLabel>
-                                        <Select
-                                            labelId="demo-simple-select-outlined-label"
-                                            id="demo-simple-select-outlined"
-                                            name="gender"
-                                            value={country}
-                                            onChange={handleChange}
-                                            label="Select Country"
-                                        >
-                                            {countriesList.map(country => (
-                                                <MenuItem key={country.name} value={country.name}> {country.name}</MenuItem>
-                                            ))}
-                                        </Select>
-                                    </FormControl> */}
 
                                     <div className={classes.formField}>
                                         <Button

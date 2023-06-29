@@ -19,7 +19,6 @@ import Shipping from "./components/shipping/Shipping";
 import Payment from "./components/payment/Payment";
 import ConfirmOrder from "./components/confirmOrder/ConfirmOrder";
 import axios from 'axios';
-import Cookies from 'universal-cookie';
 
 // Payment
 import { Elements } from '@stripe/react-stripe-js'
@@ -27,17 +26,6 @@ import { loadStripe } from '@stripe/stripe-js'
 import OrderSuccess from "./components/orderSuccess/OrderSuccess";
 import ListOrders from "./components/listOrders/ListOrders";
 import OrderDetails from "./components/orderDetails/OrderDetails";
-
-// admin routes
-import Dashboard from "./components/admin/dashboard/Dashboard";
-import ProductsList from "./components/admin/productList/ProductsList";
-import NewProduct from "./components/admin/newProduct/NewProduct";
-import UpdateProduct from "./components/admin/updateProduct/UpdateProduct";
-import OrdersList from "./components/admin/ordersList/OrdersList";
-import ProcessOrder from "./components/admin/processOrder/ProcessOrder";
-import UsersList from "./components/admin/usersList/UsersList";
-import UpdateUser from "./components/admin/updateUser/UpdateUser";
-import ProductReviews from "./components/admin/productReviews/ProductReviews";
 import MiniDrawer from "./drawer/Drawer";
 
 
@@ -116,21 +104,6 @@ const App = () => {
         <ProtectedRoute path="/password/update" component={UpdatePassword} exact />
         <ProtectedRoute path="/orders/me" component={ListOrders} exact />
         <ProtectedRoute path="/order/:id" component={OrderDetails} exact />
-
-
-        {/* admin routes start */}
-
-        <ProtectedRoute path="/dashboard" isAdmin={true} component={Dashboard} exact />
-        <ProtectedRoute path="/admin/products" isAdmin={true} component={ProductsList} exact />
-        <ProtectedRoute path="/admin/product" isAdmin={true} component={NewProduct} exact />
-        <ProtectedRoute path="/admin/product/:id" isAdmin={true} component={UpdateProduct} exact />
-        <ProtectedRoute path="/admin/orders" isAdmin={true} component={OrdersList} exact />
-        <ProtectedRoute path="/admin/order/:id" isAdmin={true} component={ProcessOrder} exact />
-        <ProtectedRoute path="/admin/users" isAdmin={true} component={UsersList} exact />
-        <ProtectedRoute path="/admin/user/:id" isAdmin={true} component={UpdateUser} exact />
-        <ProtectedRoute path="/admin/reviews" isAdmin={true} component={ProductReviews} exact />
-
-        {/* admin routes end */}
 
         {stripeApiKey &&
           <Elements stripe={loadStripe(stripeApiKey)}>
