@@ -1,0 +1,9 @@
+import React from 'react'
+
+const Dashboard = () => {
+    return (
+        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint explicabo possimus aliquam voluptatibus provident laborum aspernatur delectus veritatis animi, minus dolor harum, cum magnam earum, deleniti laudantium. Obcaecati, maiores quasi necessitatibus voluptas excepturi dolorem nobis ab quisquam dolore, numquam facere veritatis. Accusamus fugit quas harum dolor! Vitae, minus earum commodi mollitia aperiam corporis a soluta temporibus incidunt cum quod beatae voluptatem maiores. Qui natus officia nihil vero distinctio enim maxime earum quis. Sint voluptate voluptatibus quia distinctio! Sequi facere enim officia neque esse maxime. Illum impedit voluptatum quos. Temporibus excepturi iure saepe reprehenderit eaque, corporis optio fugit non. Laboriosam maxime tempore, maiores necessitatibus et facilis nostrum nam aspernatur cumque? Corrupti praesentium autem dicta assumenda minima repellat ipsa tempore similique minus, eos dignissimos est beatae quasi distinctio officiis modi iusto aspernatur sequi earum aperiam quo delectus non. Quia perspiciatis veniam reprehenderit corrupti enim odio, nesciunt molestiae sunt illum quisquam obcaecati atque quam voluptates debitis cupiditate cum assumenda vel necessitatibus itaque rerum doloribus commodi laudantium. Eveniet veniam exercitationem, amet saepe, possimus illo vel enim sunt alias soluta esse explicabo deleniti expedita laudantium quod harum, unde obcaecati! Quo, eos temporibus, repudiandae odio rem dignissimos labore autem veniam recusandae tempore ullam facere voluptates mollitia.</div>
+    )
+}
+
+export default Dashboard

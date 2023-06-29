@@ -177,7 +177,7 @@ const SingleProductDetails = () => {
                                 <div className={classes.reviewsTitle}>Other's Reviews:</div>
                                 <hr />
                                 <div className={classes.reviewsContent} >
-                                    <div style={{ display: "flex", gap: "20px", flexWrap: 'wrap' }} >
+                                    <div style={{ display: "flex", justifyContent: "center", gap: "20px", flexWrap: 'wrap' }} >
                                         {data?.product?.reviews.map((item) => (
                                             <div key={item.id} style={{ marginBottom: "20px" }} >
                                                 <div className={classes.reviewRating} >

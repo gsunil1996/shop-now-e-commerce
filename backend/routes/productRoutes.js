@@ -10,6 +10,7 @@ const {
   createProductReview,
   getProductReviews,
   deleteReview,
+  getAdminProducts,
 } = require("../controllers/productControllers");
 
 const {
@@ -21,6 +22,8 @@ router.get("/products", getProducts);
 // http://localhost:4000/api/v1/products?search=&category=all&price[lte]=10000&price[gte]=0&ratings[gte]=0&page=1
 
 router.get("/product/:id", getSingleProduct); // "/api/v1/product/:id"
+
+router.get("/admin/products", isAuthenticatedUser, authorizeRoles("admin"), getAdminProducts)
 
 router.post(
   "/admin/product/new",

@@ -158,6 +158,11 @@ const Header = ({ search, setSearch, category, price, ratings, setPage }) => {
     history.push("/orders/me")
   }
 
+  const handleDashboard = (event) => {
+    handleClose(event)
+    history.push("/dashboard")
+  }
+
 
   useEffect(() => {
     if (search == "") {
@@ -236,7 +241,7 @@ const Header = ({ search, setSearch, category, price, ratings, setPage }) => {
                               <ClickAwayListener onClickAway={handleClose}>
                                 <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
 
-                                  {user.role == "admin" && <MenuItem onClick={handleClose}>Dashboard</MenuItem>}
+                                  {user.role == "admin" && <MenuItem onClick={handleDashboard}>Dashboard</MenuItem>}
 
                                   <MenuItem onClick={handleOrder}>Orders</MenuItem>
                                   <MenuItem onClick={handleProfile}>Profile</MenuItem>

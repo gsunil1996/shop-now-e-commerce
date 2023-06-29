@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Home from "./components/home/Home";
 import Header from "./components/layouts/header/Header";
@@ -18,7 +18,8 @@ import Cart from "./components/cart/Cart";
 import Shipping from "./components/shipping/Shipping";
 import Payment from "./components/payment/Payment";
 import ConfirmOrder from "./components/confirmOrder/ConfirmOrder";
-import axios from 'axios'
+import axios from 'axios';
+import Cookies from 'universal-cookie';
 
 // Payment
 import { Elements } from '@stripe/react-stripe-js'
@@ -27,9 +28,24 @@ import OrderSuccess from "./components/orderSuccess/OrderSuccess";
 import ListOrders from "./components/listOrders/ListOrders";
 import OrderDetails from "./components/orderDetails/OrderDetails";
 
+// admin routes
+import Dashboard from "./components/admin/dashboard/Dashboard";
+import ProductsList from "./components/admin/productList/ProductsList";
+import NewProduct from "./components/admin/newProduct/NewProduct";
+import UpdateProduct from "./components/admin/updateProduct/UpdateProduct";
+import OrdersList from "./components/admin/ordersList/OrdersList";
+import ProcessOrder from "./components/admin/processOrder/ProcessOrder";
+import UsersList from "./components/admin/usersList/UsersList";
+import UpdateUser from "./components/admin/updateUser/UpdateUser";
+import ProductReviews from "./components/admin/productReviews/ProductReviews";
+import PersistentDrawerLeft from "./drawer/Drawer";
+
+
+
+
 const App = () => {
   const dispatch = useDispatch();
-
+  const location = useLocation();
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
   const [price, setPrice] = useState([1, 3000]);
@@ -38,6 +54,8 @@ const App = () => {
 
   const { isAuthenticated } = useSelector(state => state.auth);
   const [stripeApiKey, setStripeApiKey] = useState('');
+
+  const isAdminPages = location.pathname.startsWith("/admin/");
 
   // persist user across application
   useEffect(() => {
@@ -55,10 +73,14 @@ const App = () => {
 
   }, [dispatch, isAuthenticated]);
 
+  console.log("location.pathname", location.pathname)
+
   return (
     <div>
 
-      <Header search={search} setSearch={setSearch} category={category} price={price} ratings={ratings} setPage={setPage} />
+      {location.pathname == "/dashboard" ? "" : isAdminPages ? "" : <Header search={search} setSearch={setSearch} category={category} price={price} ratings={ratings} setPage={setPage} />}
+
+      {location.pathname == "/dashboard" ? <PersistentDrawerLeft /> : isAdminPages ? <PersistentDrawerLeft /> : ""}
 
       <Switch>
         <Route
@@ -85,18 +107,30 @@ const App = () => {
         <Route path="/password/forgot" component={ForgotPassword} exact />
         <Route path="/password/reset/:token" component={NewPassword} exact />
         <Route path="/cart" component={Cart} exact />
+
         <ProtectedRoute path="/shipping" component={Shipping} />
         <ProtectedRoute path="/profile" component={Profile} exact />
         <ProtectedRoute path="/confirm" component={ConfirmOrder} exact />
         <ProtectedRoute path="/success" component={OrderSuccess} />
         <ProtectedRoute path="/profile/update" component={UpdateProfile} exact />
         <ProtectedRoute path="/password/update" component={UpdatePassword} exact />
+        <ProtectedRoute path="/orders/me" component={ListOrders} exact />
+        <ProtectedRoute path="/order/:id" component={OrderDetails} exact />
 
 
-        <Route path="/orders/me" component={ListOrders} exact />
-        <Route path="/order/:id" component={OrderDetails} exact />
+        {/* admin routes start */}
 
+        <ProtectedRoute path="/dashboard" isAdmin={true} component={Dashboard} exact />
+        <ProtectedRoute path="/admin/products" isAdmin={true} component={ProductsList} exact />
+        <ProtectedRoute path="/admin/product" isAdmin={true} component={NewProduct} exact />
+        <ProtectedRoute path="/admin/product/:id" isAdmin={true} component={UpdateProduct} exact />
+        <ProtectedRoute path="/admin/orders" isAdmin={true} component={OrdersList} exact />
+        <ProtectedRoute path="/admin/order/:id" isAdmin={true} component={ProcessOrder} exact />
+        <ProtectedRoute path="/admin/users" isAdmin={true} component={UsersList} exact />
+        <ProtectedRoute path="/admin/user/:id" isAdmin={true} component={UpdateUser} exact />
+        <ProtectedRoute path="/admin/reviews" isAdmin={true} component={ProductReviews} exact />
 
+        {/* admin routes end */}
 
         {stripeApiKey &&
           <Elements stripe={loadStripe(stripeApiKey)}>
@@ -107,6 +141,7 @@ const App = () => {
         <Route path="*" component={PageNotFound} />
 
       </Switch>
+
     </div>
   );
 };
