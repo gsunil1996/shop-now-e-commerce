@@ -30,7 +30,10 @@ import {
     NEW_PASSWORD_REQUEST,
     NEW_PASSWORD_SUCCESS,
     NEW_PASSWORD_FAILURE,
-    NEW_PASSWORD_RESET
+    NEW_PASSWORD_RESET,
+    ALL_USERS_REQUEST,
+    ALL_USERS_SUCCESS,
+    ALL_USERS_FAIL
 } from "../actionTypes/userTypes";
 
 const authInitialState = {
@@ -298,6 +301,13 @@ const userInitialState = {
         error: null,
         isSuccess: false,
         isDeleted: false
+    },
+    getAllusers: {
+        isLoading: false,
+        isError: false,
+        error: null,
+        isSuccess: false,
+        data: []
     }
 }
 
@@ -385,6 +395,39 @@ export const userReducer = (state = userInitialState, action) => {
                     isError: false,
                     error: null,
                     isSuccess: false,
+                }
+            }
+
+        case ALL_USERS_REQUEST:
+            return {
+                ...state,
+                getAllusers: {
+                    isLoading: true,
+                    isError: false,
+                    error: null,
+                    isSuccess: false,
+                }
+            }
+
+        case ALL_USERS_SUCCESS:
+            return {
+                ...state,
+                getAllusers: {
+                    ...state.getAllusers,
+                    isLoading: false,
+                    isSuccess: true,
+                    data: action.payload
+                }
+            }
+
+        case ALL_USERS_FAIL:
+            return {
+                ...state,
+                getAllusers: {
+                    ...state.getAllusers,
+                    isLoading: false,
+                    isError: true,
+                    error: action.payload,
                 }
             }
 

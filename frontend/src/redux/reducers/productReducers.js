@@ -1,4 +1,4 @@
-import { GET_PRODUCTS_REQUEST, GET_PRODUCTS_SUCCESS, GET_PRODUCTS_FAILURE, GET_SINGLE_PRODUCT_REQUEST, GET_SINGLE_PRODUCT_SUCCESS, GET_SINGLE_PRODUCT_FAILURE, NEW_REVIEW_REQUEST, NEW_REVIEW_SUCCESS, NEW_REVIEW_FAIL, NEW_REVIEW_RESET } from "../actionTypes/productTypes";
+import { GET_PRODUCTS_REQUEST, GET_PRODUCTS_SUCCESS, GET_PRODUCTS_FAILURE, GET_SINGLE_PRODUCT_REQUEST, GET_SINGLE_PRODUCT_SUCCESS, GET_SINGLE_PRODUCT_FAILURE, NEW_REVIEW_REQUEST, NEW_REVIEW_SUCCESS, NEW_REVIEW_FAIL, NEW_REVIEW_RESET, ADMIN_PRODUCTS_REQUEST, ADMIN_PRODUCTS_SUCCESS, ADMIN_PRODUCTS_FAIL } from "../actionTypes/productTypes";
 
 // get products
 const getProductsInitialState = {
@@ -121,6 +121,46 @@ export const newReviewReducer = (state = newReviewInitialState, action) => {
                 isError: false,
                 error: "",
                 isSuccess: false,
+            }
+
+        default:
+            return state
+    }
+}
+
+// get products
+const adminGetProductsInitialState = {
+    data: [],
+    isLoading: false,
+    isError: false,
+    error: "",
+    isSuccess: false,
+}
+
+export const adminGetProductsReducer = (state = adminGetProductsInitialState, action) => {
+    switch (action.type) {
+        case ADMIN_PRODUCTS_REQUEST:
+            return {
+                ...state,
+                data: [],
+                isLoading: true,
+                isError: false,
+                error: "",
+                isSuccess: false,
+            }
+        case ADMIN_PRODUCTS_SUCCESS:
+            return {
+                ...state,
+                data: action.payload,
+                isLoading: false,
+                isSuccess: true,
+            }
+        case ADMIN_PRODUCTS_FAIL:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
+                error: action.payload,
             }
 
         default:

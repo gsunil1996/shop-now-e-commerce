@@ -61,7 +61,6 @@ const App = () => {
 
   }, [dispatch, isAuthenticated]);
 
-  console.log("location.pathname", location.pathname)
 
   return (
     <div>

@@ -15,12 +15,10 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import { useHistory } from "react-router-dom";
 import Box from '@material-ui/core/Box';
 import logo from "../assets/images/logo.png"
-import { Switch } from "react-router-dom";
+import { Switch, useLocation } from "react-router-dom";
 import ProtectedRoute from '../routes/ProtectedRoute';
 import Dashboard from '../components/admin/dashboard/Dashboard';
 import ProductsList from '../components/admin/productList/ProductsList';
@@ -157,6 +155,7 @@ const useStyles = makeStyles((theme) => ({
 const MiniDrawer = () => {
     const classes = useStyles();
     const history = useHistory();
+    const location = useLocation();
     const dispatch = useDispatch();
     const theme = useTheme();
     const [drawerOpen, setDrawerOpen] = React.useState(true);
@@ -251,9 +250,9 @@ const MiniDrawer = () => {
         }
     }
 
+    let url = location.pathname;
+
     React.useEffect(() => {
-        let total_url = window.location.pathname.split('/')
-        let url = total_url[1];
         if (url === "/dashboard") {
             setSelectedIndex(0)
         }
@@ -272,7 +271,7 @@ const MiniDrawer = () => {
         else if (url === "/admin/reviews") {
             setSelectedIndex(5)
         }
-    }, []);
+    }, [url]);
 
 
     const handleDrawerOpen = () => {
