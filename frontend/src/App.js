@@ -38,7 +38,7 @@ import ProcessOrder from "./components/admin/processOrder/ProcessOrder";
 import UsersList from "./components/admin/usersList/UsersList";
 import UpdateUser from "./components/admin/updateUser/UpdateUser";
 import ProductReviews from "./components/admin/productReviews/ProductReviews";
-import PersistentDrawerLeft from "./drawer/Drawer";
+import MiniDrawer from "./drawer/Drawer";
 
 
 
@@ -80,7 +80,7 @@ const App = () => {
 
       {location.pathname == "/dashboard" ? "" : isAdminPages ? "" : <Header search={search} setSearch={setSearch} category={category} price={price} ratings={ratings} setPage={setPage} />}
 
-      {location.pathname == "/dashboard" ? <PersistentDrawerLeft /> : isAdminPages ? <PersistentDrawerLeft /> : ""}
+      {location.pathname == "/dashboard" ? <MiniDrawer /> : isAdminPages ? <MiniDrawer /> : ""}
 
       <Switch>
         <Route
