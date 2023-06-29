@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme, withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -20,7 +20,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import { useHistory } from "react-router-dom";
 import Box from '@material-ui/core/Box';
 import logo from "../assets/images/logo.png"
-import { Route, Switch, useLocation } from "react-router-dom";
+import { Switch } from "react-router-dom";
 import ProtectedRoute from '../routes/ProtectedRoute';
 import Dashboard from '../components/admin/dashboard/Dashboard';
 import ProductsList from '../components/admin/productList/ProductsList';
@@ -31,6 +31,23 @@ import ProcessOrder from '../components/admin/processOrder/ProcessOrder';
 import UsersList from '../components/admin/usersList/UsersList';
 import UpdateUser from '../components/admin/updateUser/UpdateUser';
 import ProductReviews from '../components/admin/productReviews/ProductReviews';
+import { useDispatch, useSelector } from "react-redux";
+import Avatar from '@material-ui/core/Avatar';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import Popper from '@material-ui/core/Popper';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
+import { logoutAction } from '../redux/actions/userActions';
+import { GET_CART_RESET } from '../redux/actionTypes/cartTypes';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import AddIcon from '@material-ui/icons/Add';
+import LocalMallIcon from '@material-ui/icons/LocalMall';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
+import RateReviewIcon from '@material-ui/icons/RateReview';
 
 const drawerWidth = 240;
 
@@ -140,8 +157,13 @@ const useStyles = makeStyles((theme) => ({
 const MiniDrawer = () => {
     const classes = useStyles();
     const history = useHistory();
+    const dispatch = useDispatch();
     const theme = useTheme();
-    const [open, setOpen] = React.useState(true);
+    const [drawerOpen, setDrawerOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
+    const anchorRef = React.useRef(null);
+
+    const { isAuthenticated, user } = useSelector(state => state.auth);
 
     const [selectedIndex, setSelectedIndex] = React.useState(0);
 
@@ -149,32 +171,32 @@ const MiniDrawer = () => {
     const itemsList = [
         {
             text: "Dashboard",
-            icon: <MailIcon />,
+            icon: <DashboardIcon />,
             indexes: 0,
         },
         {
             text: "All Products",
-            icon: <InboxIcon />,
+            icon: <LocalMallIcon />,
             indexes: 1,
         },
         {
             text: "Create Product",
-            icon: <MailIcon />,
+            icon: <AddIcon />,
             indexes: 2,
         },
         {
             text: "Orders",
-            icon: <InboxIcon />,
+            icon: <ShoppingCartIcon />,
             indexes: 3,
         },
         {
             text: "Users",
-            icon: <MailIcon />,
+            icon: <PeopleAltIcon />,
             indexes: 4,
         },
         {
             text: "Reviews",
-            icon: <MailIcon />,
+            icon: <RateReviewIcon />,
             indexes: 5,
         }
     ];
@@ -201,6 +223,34 @@ const MiniDrawer = () => {
         }
     };
 
+    const handleDashboard = (event) => {
+        handleClose(event)
+        history.push("/dashboard")
+    }
+
+    const handleLogout = (event) => {
+        handleClose(event)
+        dispatch(logoutAction());
+        dispatch({ type: GET_CART_RESET });
+    }
+
+    const handleProfile = (event) => {
+        handleClose(event)
+        history.push("/profile")
+    }
+
+    const handleOrder = (event) => {
+        handleClose(event)
+        history.push("/orders/me")
+    }
+
+    function handleListKeyDown(event) {
+        if (event.key === 'Tab') {
+            event.preventDefault();
+            setOpen(false);
+        }
+    }
+
     React.useEffect(() => {
         let total_url = window.location.pathname.split('/')
         let url = total_url[1];
@@ -226,12 +276,33 @@ const MiniDrawer = () => {
 
 
     const handleDrawerOpen = () => {
-        setOpen(true);
+        setDrawerOpen(true);
     };
 
     const handleDrawerClose = () => {
+        setDrawerOpen(false);
+    };
+
+    const handleToggle = () => {
+        setOpen((prevOpen) => !prevOpen);
+    };
+
+    const handleClose = (event) => {
+        if (anchorRef.current && anchorRef.current.contains(event.target)) {
+            return;
+        }
+
         setOpen(false);
     };
+
+    const prevOpen = React.useRef(open);
+    React.useEffect(() => {
+        if (prevOpen.current === true && open === false) {
+            anchorRef.current.focus();
+        }
+
+        prevOpen.current = open;
+    }, [open]);
 
     return (
         <div className={classes.root}>
@@ -239,7 +310,7 @@ const MiniDrawer = () => {
             <AppBar
                 position="fixed"
                 className={clsx(classes.appBar, {
-                    [classes.appBarShift]: open,
+                    [classes.appBarShift]: drawerOpen,
                 })}
             >
                 <Toolbar style={{ background: "#232F3E" }}>
@@ -249,7 +320,7 @@ const MiniDrawer = () => {
                         onClick={handleDrawerOpen}
                         edge="start"
                         className={clsx(classes.menuButton, {
-                            [classes.hide]: open,
+                            [classes.hide]: drawerOpen,
                         })}
                     >
 
@@ -259,6 +330,42 @@ const MiniDrawer = () => {
                         {selectedIndex == 0 ? "Dashboard" : selectedIndex == 1 ? "All Products" : selectedIndex == 2 ? "Create Product" : selectedIndex == 3 ? "Orders" : selectedIndex == 4 ? "Users" : selectedIndex == 5 ? "Reviews" : ""}
                     </Typography>
                     <Box sx={{ flexGrow: 1 }} />
+                    <div>
+                        {isAuthenticated &&
+                            <div style={{ display: "flex", gap: "10px", alignItems: "center" }} >
+                                <Avatar alt="Profile pic" src={user?.avatar?.url} className={classes.avatar} />
+                                <div className={classes.profileText}>{user?.name}</div>
+                                <div>
+                                    <ArrowDropDownIcon
+                                        ref={anchorRef}
+                                        aria-controls={open ? 'menu-list-grow' : undefined}
+                                        aria-haspopup="true"
+                                        onClick={handleToggle}
+                                        className={classes.profileIcon} />
+                                    <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal style={{ zIndex: 99 }} >
+                                        {({ TransitionProps, placement }) => (
+                                            <Grow
+                                                {...TransitionProps}
+                                                style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+                                            >
+                                                <Paper>
+                                                    <ClickAwayListener onClickAway={handleClose}>
+                                                        <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+
+                                                            {user.role == "admin" && <MenuItem onClick={handleDashboard}>Dashboard</MenuItem>}
+
+                                                            <MenuItem onClick={handleOrder}>Orders</MenuItem>
+                                                            <MenuItem onClick={handleProfile}>Profile</MenuItem>
+                                                            <MenuItem onClick={handleLogout} style={{ color: "#5C0512" }} >Logout</MenuItem>
+                                                        </MenuList>
+                                                    </ClickAwayListener>
+                                                </Paper>
+                                            </Grow>
+                                        )}
+                                    </Popper>
+                                </div>
+                            </div>}
+                    </div>
                 </Toolbar>
             </AppBar>
 
@@ -268,13 +375,13 @@ const MiniDrawer = () => {
                 variant="permanent"
 
                 className={clsx(classes.drawer, {
-                    [classes.drawerOpen]: open,
-                    [classes.drawerClose]: !open,
+                    [classes.drawerOpen]: drawerOpen,
+                    [classes.drawerClose]: !drawerOpen,
                 })}
                 classes={{
                     paper: clsx({
-                        [classes.drawerOpen]: open,
-                        [classes.drawerClose]: !open,
+                        [classes.drawerOpen]: drawerOpen,
+                        [classes.drawerClose]: !drawerOpen,
                     }),
                 }}
             >
