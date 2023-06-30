@@ -35,7 +35,7 @@ const Dashboard = () => {
                     <CardContent>
                         <div style={{ textAlign: "center" }} >
                             <h1>Total Amount</h1>
-                            {allOrdersIsLoading ? <div style={{ width: "100%", display: "flex", justifyContent: "center" }} > <CircularProgress style={{ color: "#ffff" }} /> </div> : allOrdersIsError ? <h1 style={{ marginBottom: "0px" }} >{allOrdersError}</h1> : allOrdersIsSuccess ? <h1 style={{ marginBottom: "0px" }} >{allOrdersData?.totalAmount}</h1> : ""}
+                            {allOrdersIsLoading ? <div style={{ width: "100%", display: "flex", justifyContent: "center" }} > <CircularProgress style={{ color: "#ffff" }} /> </div> : allOrdersIsError ? <h1 style={{ marginBottom: "0px" }} >{allOrdersError}</h1> : allOrdersIsSuccess ? <h1 style={{ marginBottom: "0px" }} >{allOrdersData?.totalAmount.toFixed(2)}</h1> : ""}
                         </div>
                     </CardContent>
                 </Card>

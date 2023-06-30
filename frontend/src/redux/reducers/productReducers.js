@@ -1,4 +1,4 @@
-import { GET_PRODUCTS_REQUEST, GET_PRODUCTS_SUCCESS, GET_PRODUCTS_FAILURE, GET_SINGLE_PRODUCT_REQUEST, GET_SINGLE_PRODUCT_SUCCESS, GET_SINGLE_PRODUCT_FAILURE, NEW_REVIEW_REQUEST, NEW_REVIEW_SUCCESS, NEW_REVIEW_FAIL, NEW_REVIEW_RESET, ADMIN_PRODUCTS_REQUEST, ADMIN_PRODUCTS_SUCCESS, ADMIN_PRODUCTS_FAIL, DELETE_PRODUCT_REQUEST, DELETE_PRODUCT_SUCCESS, DELETE_PRODUCT_FAIL, DELETE_PRODUCT_RESET, NEW_PRODUCT_REQUEST, NEW_PRODUCT_SUCCESS, NEW_PRODUCT_FAIL, NEW_PRODUCT_RESET, UPDATE_PRODUCT_REQUEST, UPDATE_PRODUCT_SUCCESS, UPDATE_PRODUCT_FAIL, UPDATE_PRODUCT_RESET } from "../actionTypes/productTypes";
+import { GET_PRODUCTS_REQUEST, GET_PRODUCTS_SUCCESS, GET_PRODUCTS_FAILURE, GET_SINGLE_PRODUCT_REQUEST, GET_SINGLE_PRODUCT_SUCCESS, GET_SINGLE_PRODUCT_FAILURE, NEW_REVIEW_REQUEST, NEW_REVIEW_SUCCESS, NEW_REVIEW_FAIL, NEW_REVIEW_RESET, ADMIN_PRODUCTS_REQUEST, ADMIN_PRODUCTS_SUCCESS, ADMIN_PRODUCTS_FAIL, DELETE_PRODUCT_REQUEST, DELETE_PRODUCT_SUCCESS, DELETE_PRODUCT_FAIL, DELETE_PRODUCT_RESET, NEW_PRODUCT_REQUEST, NEW_PRODUCT_SUCCESS, NEW_PRODUCT_FAIL, NEW_PRODUCT_RESET, UPDATE_PRODUCT_REQUEST, UPDATE_PRODUCT_SUCCESS, UPDATE_PRODUCT_FAIL, UPDATE_PRODUCT_RESET, GET_REVIEWS_REQUEST, GET_REVIEWS_SUCCESS, GET_REVIEWS_FAIL } from "../actionTypes/productTypes";
 
 // get products
 const getProductsInitialState = {
@@ -303,6 +303,48 @@ export const updateProductReducer = (state = updateProductInitialState, action) 
                 isError: false,
                 error: "",
                 isSuccess: false,
+            }
+
+        default:
+            return state
+    }
+}
+
+const getReviewsInitialState = {
+    isLoading: false,
+    isError: false,
+    error: "",
+    isSuccess: false,
+    data: []
+}
+
+export const getReviewsReducer = (state = getReviewsInitialState, action) => {
+    switch (action.type) {
+
+        case GET_REVIEWS_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+                isError: false,
+                error: "",
+                isSuccess: false,
+                data: []
+            }
+
+        case GET_REVIEWS_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                isSuccess: true,
+                data: action.payload
+            }
+
+        case GET_REVIEWS_FAIL:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
+                error: action.payload,
             }
 
         default:
