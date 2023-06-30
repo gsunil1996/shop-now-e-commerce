@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { getAdminProducts } from '../../../redux/actions/productActions';
+import { deleteProduct, getAdminProducts } from '../../../redux/actions/productActions';
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -17,6 +17,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import TextField from '@material-ui/core/TextField';
 import { CircularProgress } from '@material-ui/core';
+import { DELETE_PRODUCT_RESET } from '../../../redux/actionTypes/productTypes';
 
 const columns = [
     {
@@ -61,6 +62,7 @@ const ProductsList = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const { data, isLoading, isError, error, isSuccess } = useSelector(state => state.adminGetAllProducts);
+    const { isLoading: deleteIsLoading, isError: deleteIsErrror, error: deleteError, isSuccess: deleteIsSuccess } = useSelector(state => state.deleteProduct);
 
     const [search, setSearch] = useState("");
     const [filteredData, setFilteredData] = useState([]);
@@ -81,8 +83,8 @@ const ProductsList = () => {
     }
 
     const handleDeleteClick = (e, id) => {
-        // dispatch(deleteProduct(id))
         setSelectedId(id)
+        dispatch(deleteProduct(id))
     }
 
     useEffect(() => {
@@ -92,6 +94,18 @@ const ProductsList = () => {
     useEffect(() => {
         dispatch(getAdminProducts())
     }, [dispatch])
+
+    useEffect(() => {
+        if (deleteIsErrror) {
+            alert(deleteError)
+            dispatch({ type: DELETE_PRODUCT_RESET });
+        }
+        if (deleteIsSuccess) {
+            alert("Product Deleted Successfully")
+            dispatch({ type: DELETE_PRODUCT_RESET });
+        }
+    }, [dispatch, deleteIsErrror, deleteError, deleteIsSuccess])
+
     return (
         <div>
             <Helmet>
@@ -207,6 +221,7 @@ const ProductsList = () => {
                                                                 </Button>
 
                                                                 <Button variant="contained" color="success"
+                                                                    disabled={deleteIsLoading ? true : false}
                                                                     onClick={(event) =>
                                                                         handleDeleteClick(event, row._id)
                                                                     }
