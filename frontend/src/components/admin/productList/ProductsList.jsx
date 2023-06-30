@@ -93,9 +93,7 @@ const ProductsList = () => {
 
     useEffect(() => {
         dispatch(getAdminProducts())
-    }, [dispatch])
 
-    useEffect(() => {
         if (deleteIsErrror) {
             alert(deleteError)
             dispatch({ type: DELETE_PRODUCT_RESET });

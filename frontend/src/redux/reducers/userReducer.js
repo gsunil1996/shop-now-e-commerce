@@ -33,7 +33,18 @@ import {
     NEW_PASSWORD_RESET,
     ALL_USERS_REQUEST,
     ALL_USERS_SUCCESS,
-    ALL_USERS_FAIL
+    ALL_USERS_FAIL,
+    DELETE_USER_REQUEST,
+    DELETE_USER_SUCCESS,
+    DELETE_USER_FAIL,
+    DELETE_USER_RESET,
+    UPDATE_USER_REQUEST,
+    UPDATE_USER_SUCCESS,
+    UPDATE_USER_FAIL,
+    UPDATE_USER_RESET,
+    USER_DETAILS_REQUEST,
+    USER_DETAILS_SUCCESS,
+    USER_DETAILS_FAIL
 } from "../actionTypes/userTypes";
 
 const authInitialState = {
@@ -308,6 +319,13 @@ const userInitialState = {
         error: null,
         isSuccess: false,
         data: []
+    },
+    getSingleUserDetails: {
+        isLoading: false,
+        isError: false,
+        error: null,
+        isSuccess: false,
+        data: {}
     }
 }
 
@@ -425,6 +443,126 @@ export const userReducer = (state = userInitialState, action) => {
                 ...state,
                 getAllusers: {
                     ...state.getAllusers,
+                    isLoading: false,
+                    isError: true,
+                    error: action.payload,
+                }
+            }
+
+        case DELETE_USER_REQUEST:
+            return {
+                ...state,
+                deleteUser: {
+                    isLoading: true,
+                    isError: false,
+                    error: null,
+                    isSuccess: false,
+                }
+            }
+
+        case DELETE_USER_SUCCESS:
+            return {
+                ...state,
+                deleteUser: {
+                    ...state.deleteUser,
+                    isLoading: false,
+                    isSuccess: true,
+                }
+            }
+
+        case DELETE_USER_FAIL:
+            return {
+                ...state,
+                deleteUser: {
+                    ...state.deleteUser,
+                    isLoading: false,
+                    isError: true,
+                    error: action.payload,
+                }
+            }
+
+        case DELETE_USER_RESET:
+            return {
+                ...state,
+                deleteUser: {
+                    isLoading: false,
+                    isError: false,
+                    error: null,
+                    isSuccess: false,
+                }
+            }
+
+        case UPDATE_USER_REQUEST:
+            return {
+                ...state,
+                updateUser: {
+                    isLoading: true,
+                    isError: false,
+                    error: null,
+                    isSuccess: false,
+                }
+            }
+
+        case UPDATE_USER_SUCCESS:
+            return {
+                ...state,
+                updateUser: {
+                    ...state.updateUser,
+                    isLoading: false,
+                    isSuccess: true,
+                }
+            }
+
+        case UPDATE_USER_FAIL:
+            return {
+                ...state,
+                updateUser: {
+                    ...state.updateUser,
+                    isLoading: false,
+                    isError: true,
+                    error: action.payload,
+                }
+            }
+
+        case UPDATE_USER_RESET:
+            return {
+                ...state,
+                updateUser: {
+                    isLoading: false,
+                    isError: false,
+                    error: null,
+                    isSuccess: false,
+                }
+            }
+
+
+        case USER_DETAILS_REQUEST:
+            return {
+                ...state,
+                getSingleUserDetails: {
+                    isLoading: true,
+                    isError: false,
+                    error: null,
+                    isSuccess: false,
+                }
+            }
+
+        case USER_DETAILS_SUCCESS:
+            return {
+                ...state,
+                getSingleUserDetails: {
+                    ...state.getSingleUserDetails,
+                    isLoading: false,
+                    isSuccess: true,
+                    data: action.payload
+                }
+            }
+
+        case USER_DETAILS_FAIL:
+            return {
+                ...state,
+                getSingleUserDetails: {
+                    ...state.getSingleUserDetails,
                     isLoading: false,
                     isError: true,
                     error: action.payload,
