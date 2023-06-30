@@ -71,7 +71,7 @@ const OrderDetails = () => {
 
     useEffect(() => {
         dispatch(getOrderDetails(id));
-    }, [])
+    }, [id, dispatch])
 
     useEffect(() => {
         if (reviewIsSuccess) {
