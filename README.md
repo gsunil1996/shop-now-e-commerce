@@ -301,4 +301,95 @@ Register Page
 </tbody>
 </table>
 
+# Admin Dashboard
+
+<table align="center" >
+<tbody>
+  
+<tr valign="top">
+
+<td width="50%" align="center">
+
+Admin Dashboard
+  
+![20 admin dashboard](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/bc0103a6-783e-4b6e-8b03-79bce1d954c7)
+
+</td>
+
+<td width="50%" align="center">
+
+Admin Product List
+
+![21 admin products list](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/f7f0c8bd-4310-4a0e-ab20-a2d9589f5d84)
+
+</tr>
+
+<tr valign="top">
+
+<td width="50%" align="center">
+
+Update Product
+  
+![22 update product](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/b1b5ab6d-ab7b-43b0-b3b8-9a167b299b0c)
+
+</td>
+
+<td width="50%" align="center">
+
+Create New Product
+
+![23 create new product](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/8b71e0ee-ca1e-4fd0-8b8f-6fd7d1993fc7)
+
+</tr>
+
+<tr valign="top">
+
+<td width="50%" align="center">
+
+All Orders List
+  
+![24 all orders list](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/720d0437-071b-4508-8b6b-2b34ac99419f)
+
+</td>
+
+<td width="50%" align="center">
+
+Update Order Status
+
+![25 update order status](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/8430dc5b-ea70-484a-835c-bb1bc50cea2f)
+
+</tr>
+
+<tr valign="top">
+
+<td width="50%" align="center">
+
+Users List
+
+![26 users list](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/56f6e7c9-2723-499c-99d3-d0070e945d47)
+
+</td>
+
+<td width="50%" align="center">
+
+Update User
+
+![27 update user](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/33f21e8d-47cd-4f82-a2d9-c100386ead3f)
+
+</tr>
+
+<tr valign="top">
+
+<td width="50%" align="center">
+
+Delete Ratings and Reviews
+
+![28 delte ratings and reviews](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/fd9f3fee-15f1-4295-bd69-0b87bde10430)
+
+</td>
+
+</tr>
+
+</tbody>
+</table>
 
