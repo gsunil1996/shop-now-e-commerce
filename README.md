@@ -105,3 +105,26 @@ in terminal type npm start
 </tbody>
 
 </table>
+
+# Filters and product details page
+
+<table align="center" >
+<tbody>
+<tr valign="top">
+
+<td width="50%" align="center">
+
+![2 filter by price, category and rating](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/c8ca23f2-242a-4f6d-a2b9-13d5dbb0300a)
+
+</td>
+
+<td width="50%" align="center">
+
+![2 product details page](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/b351b943-4ad0-4f9c-9765-ba034f94e2a6)
+
+</td>
+
+</tr>
+</tbody>
+</table>
+
