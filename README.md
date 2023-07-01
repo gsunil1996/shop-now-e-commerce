@@ -166,6 +166,138 @@ Payment Page
 
 </tr>
 
+<tr valign="top">
+
+<td width="50%" align="center">
+
+Stripe Payment
+
+![7 stripe payment integration](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/4a65583c-6562-416d-a621-dea1f7cdcfd0)
+
+</td>
+
+<td width="50%" align="center">
+
+Order Successfully Placed
+
+![8 order succcessfully placed](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/401d073d-7ab7-4a92-9b8b-57037f9b99e5)
+
+</td>
+
+</tr>
+
+<tr valign="top">
+
+<td width="50%" align="center">
+
+My Orders Page
+
+![9 my order page](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/1745ec39-58ce-43f1-9be5-26e0592dcbcd)
+
+</td>
+
+<td width="50%" align="center">
+
+Order Details Page
+
+![10 order details](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/c5d60eda-e68b-43c7-84c2-44dd6b2f587c)
+
+</td>
+
+</tr>
+
+<tr valign="top">
+
+<td width="50%" align="center">
+
+Submit Reviews Page
+
+![11 submit reviews and ratings](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/9f679eef-149e-485c-b3be-4529a2c893c5)
+
+</td>
+
+<td width="50%" align="center">
+
+User Profile Page
+
+![12 user profile](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/82adffd2-44b2-457a-a602-3078bfd60c90)
+
+</td>
+
+</tr>
+
+<tr valign="top">
+
+<td width="50%" align="center">
+
+Edit Profile Page
+
+![13 edit profile](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/113d10b7-e7c0-45b9-adda-03fd25612119)
+
+</td>
+
+<td width="50%" align="center">
+
+Change Password Page
+
+![14 change password](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/4545464f-c127-477b-b0d6-80f6cf1aab73)
+
+</td>
+
+</tr>
+
+<tr valign="top">
+
+<td width="50%" align="center">
+
+Login Page
+
+![15 login](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/43dadc65-3266-4517-9c68-acadc7b4043b)
+
+</td>
+
+<td width="50%" align="center">
+
+Forgot Page
+
+![16 forgot password](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/751ba42e-a3f0-49f5-b766-bf0ea2452c08)
+
+</td>
+
+</tr>
+
+<tr valign="top">
+
+<td width="50%" align="center">
+
+Password Recovery
+
+![17 password recovery](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/5edcabb5-27fb-4510-b3fb-663968585baf)
+
+</td>
+
+<td width="50%" align="center">
+
+Enter New Password
+
+![18 entering new password](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/dca81b6f-d265-4d99-8aab-383c2cd3686e)
+
+</td>
+
+</tr>
+
+<tr valign="top">
+
+<td width="50%" align="center">
+
+Register Page
+
+![19 registerer user](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/e06b0578-77bc-4408-ac00-50634a2233bf)
+
+</td>
+
+</tr>
+
 </tbody>
 </table>
 
