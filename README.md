@@ -16,38 +16,33 @@ clone the project
 <h3>cd backend </h1>
 <h3>npm install</h3>
 
-add .env in the backend root
-sample .env
+add .env file in the backend
+<p>sample .env</p>
 
-PORT =															
-FRONTEND_URL =								
-DB_LOCAL_URI =								
-DB_MONGO_URI =									
-JWT_SECRET =								
-JWT_EXPIRES_TIME =							
-COOKIE_EXPIRES_TIME =							
-									
-CLOUDINARY_CLOUD_NAME =							
-CLOUDINARY_API_KEY =									
-CLOUDINARY_API_SECRET =								
-									
-SMTP_HOST =								
-SMTP_PORT =									
-SMTP_EMAIL =								
-SMTP_PASSWORD =								
-SMTP_FROM_EMAIL =								
-SMTP_FROM_NAME =			
-									
-STRIPE_SECRET_KEY =								
-STRIPE_API_KEY =
+<p>PORT =</p>															
+<p>FRONTEND_URL =</p>								
+<p>DB_LOCAL_URI =</p>								
+<p>DB_MONGO_URI =</p>									
+<p>JWT_SECRET =</p>								
+<p>JWT_EXPIRES_TIME =</p>							
+<p>COOKIE_EXPIRES_TIME =</p>							
+<p>CLOUDINARY_CLOUD_NAME =</p>							
+<p>CLOUDINARY_API_KEY =</p>									
+<p>CLOUDINARY_API_SECRET =</p>								
+<p>SMTP_HOST =</p>								
+<p>SMTP_PORT =</p>									
+<p>SMTP_EMAIL =</p>								
+<p>SMTP_PASSWORD =</p>								
+<p>SMTP_FROM_EMAIL =</p>								
+<p>SMTP_FROM_NAME =</p>			
+<p>STRIPE_SECRET_KEY =</p>								
+<p>STRIPE_API_KEY =</p>
 
 in terminal type nodemon, it will start server
 
 # Frontend
 cd frontend
-
 <div>npm install</div>
-
 in terminal type npm start
 
 # Home page
