@@ -89,7 +89,7 @@ const UpdatePassword = () => {
                     <Grid item xs={10} sm={10} md={4} lg={4} xl={4} style={{ margin: "auto" }} >
                         <Card style={{ boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px" }} >
                             <CardContent>
-                                <div className={classes.title}>Update Password</div>
+                                <div className={classes.title}>Change Password</div>
                                 <form onSubmit={handleSubmit}>
                                     <div className={classes.formField}>
                                         <TextField
