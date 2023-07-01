@@ -1,6 +1,28 @@
 # shop-now-e-commerce
 An e-commerce website that allows users to buy items online.
 
+# Home page
+![1 home](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/a0893ca2-228e-46a9-a707-cabaa01f14ce)
+
+# Description
+<p>
+I have successfully developed an end-to-end e-commerce website using the MERN
+stack. The website offers a comprehensive and intuitive user experience with
+advanced filtering options for price, categories, ratings, and search functionality.
+</p>
+
+<p>
+The website incorporates real-time payment integration using Stripe, enabling
+seamless and secure online transactions.
+</p>
+
+<p>
+Moreover, the website features an efficient admin dashboard that empowers
+administrators to effortlessly add, delete, and update product listings. Additionally,
+the dashboard provides comprehensive insights by allowing administrators to track
+total payments received and promptly identify products that are out of stock.
+</p>
+
 # Features:
 User Authentication | Filters | Payment Gateway | Admin Dashboard | End to-
 end product purchasing flow from the store.
@@ -16,7 +38,7 @@ clone the project
 <h3>cd backend </h1>
 <h3>npm install</h3>
 
-add .env file in the backend
+add .env file in the backend folder
 <p>sample .env</p>
 
 <p>PORT =</p>															
@@ -45,8 +67,6 @@ cd frontend
 <div>npm install</div>
 in terminal type npm start
 
-# Home page
-![1 home](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/a0893ca2-228e-46a9-a707-cabaa01f14ce)
 
 # Mobile Responsiveness
 
