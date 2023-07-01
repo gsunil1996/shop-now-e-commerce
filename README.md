@@ -106,25 +106,67 @@ in terminal type npm start
 
 </table>
 
-# Filters and product details page
+# Website
 
 <table align="center" >
 <tbody>
+  
 <tr valign="top">
 
 <td width="50%" align="center">
 
+Filters
+  
 ![2 filter by price, category and rating](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/c8ca23f2-242a-4f6d-a2b9-13d5dbb0300a)
 
 </td>
 
 <td width="50%" align="center">
 
+Product Details Page
+
 ![2 product details page](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/b351b943-4ad0-4f9c-9765-ba034f94e2a6)
+
+</tr>
+
+<tr valign="top">
+
+<td width="50%" align="center">
+cart
+  
+![3 cart page](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/db613dac-b022-47e7-a4a5-08721083cbc2)
+
+</td>
+
+<td width="50%" align="center">
+
+Shipping
+
+![4 shipping page](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/e15842d8-1f0c-4f3c-af58-1a195c864c16)
+
+</tr>
+
+<tr valign="top">
+
+<td width="50%" align="center">
+
+confirm Order Page
+
+![5 confirm order](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/5872a7a4-cfd4-4e4f-ab62-94522862eb12)
+
+</td>
+
+<td width="50%" align="center">
+
+Payment Page
+
+![6 payment page](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/d4a37fdc-5c6b-44d4-9a16-6854c41f5bb5)
 
 </td>
 
 </tr>
+
 </tbody>
 </table>
+
 
