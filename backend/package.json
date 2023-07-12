@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm i",
+    "build": "npm run transpile && npm run bundle",
+    "transpile": "tsc",
+    "bundle": "webpack",
     "dev": "nodemon server.js",
     "start": "node server.js"
   },
