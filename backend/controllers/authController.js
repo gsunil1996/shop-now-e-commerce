@@ -112,7 +112,7 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
 
 
   // const resetUrl = `http://localhost:3000/password/reset/${resetToken}`
-  const resetUrl = `https://shop-now-e-commerce.vercel.app/password/reset/${resetToken}`
+  const resetUrl = `https://shop-now-e-commerce-eb1l.vercel.app/password/reset/${resetToken}`
 
   const message = `Your password reset token is as follow:\n\n${resetUrl}\n\nIf you have not requested this email, then ignore it.`;
 
