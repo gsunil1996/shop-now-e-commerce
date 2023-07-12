@@ -1,10 +1,13 @@
 # shop-now-e-commerce
+
 An e-commerce website that allows users to buy items online.
 
 # Home page
+
 ![1 home](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/a0893ca2-228e-46a9-a707-cabaa01f14ce)
 
 # Description
+
 <p>
 I have successfully developed an end-to-end e-commerce website using the MERN
 stack. The website offers a comprehensive and intuitive user experience with
@@ -24,13 +27,16 @@ total payments received and promptly identify products that are out of stock.
 </p>
 
 # Features:
+
 User Authentication | Filters | Payment Gateway | Admin Dashboard | End to-
 end product purchasing flow from the store.
 
-# Tech Stack: 
+# Tech Stack:
+
 React Js | Redux | Express Js | Node Js | MongoDB | Material-UI
 
 # How to run code
+
 clone the project
 
 # backend
@@ -39,10 +45,10 @@ clone the project
 <h3>npm install</h3>
 
 add .env file in the backend folder
+
 <p>sample .env</p>
 
-<p>PORT =</p>															
-<p>FRONTEND_URL =</p>								
+<p>PORT =</p>																						
 <p>DB_LOCAL_URI =</p>								
 <p>DB_MONGO_URI =</p>									
 <p>JWT_SECRET =</p>								
@@ -63,10 +69,11 @@ add .env file in the backend folder
 in terminal type nodemon, it will start server
 
 # Frontend
+
 cd frontend
+
 <div>npm install</div>
 in terminal type npm start
-
 
 # Mobile Responsiveness
 
@@ -116,7 +123,7 @@ in terminal type npm start
 <td width="50%" align="center">
 
 Filters
-  
+
 ![2 filter by price, category and rating](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/c8ca23f2-242a-4f6d-a2b9-13d5dbb0300a)
 
 </td>
@@ -311,7 +318,7 @@ Register Page
 <td width="50%" align="center">
 
 Admin Dashboard
-  
+
 ![20 admin dashboard](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/bc0103a6-783e-4b6e-8b03-79bce1d954c7)
 
 </td>
@@ -329,7 +336,7 @@ Admin Product List
 <td width="50%" align="center">
 
 Update Product
-  
+
 ![22 update product](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/b1b5ab6d-ab7b-43b0-b3b8-9a167b299b0c)
 
 </td>
@@ -347,7 +354,7 @@ Create New Product
 <td width="50%" align="center">
 
 All Orders List
-  
+
 ![24 all orders list](https://github.com/gsunil1996/shop-now-e-commerce/assets/56502551/720d0437-071b-4508-8b6b-2b34ac99419f)
 
 </td>
@@ -392,4 +399,3 @@ Delete Ratings and Reviews
 
 </tbody>
 </table>
-
