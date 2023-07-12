@@ -27,6 +27,7 @@ import OrderSuccess from "./components/orderSuccess/OrderSuccess";
 import ListOrders from "./components/listOrders/ListOrders";
 import OrderDetails from "./components/orderDetails/OrderDetails";
 import MiniDrawer from "./drawer/Drawer";
+import { severUrl } from "./api/api";
 
 
 
@@ -52,7 +53,7 @@ const App = () => {
     }
 
     async function getStripApiKey() {
-      const { data } = await axios.get('http://localhost:4000/api/v1/stripeapi', { withCredentials: true });
+      const { data } = await axios.get(`${severUrl}/api/v1/stripeapi`, { withCredentials: true });
 
       setStripeApiKey(data.stripeApiKey)
     }

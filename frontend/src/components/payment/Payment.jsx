@@ -15,6 +15,7 @@ import { useHistory } from 'react-router-dom';
 import { createOrder } from '../../redux/actions/orderActions';
 import { deleteAllCartItem } from '../../redux/actions/cartActions';
 import { REMOVE_ALL_CART_PRODUCTS_RESET } from '../../redux/actionTypes/cartTypes';
+import { severUrl } from '../../api/api';
 
 const Payment = () => {
     const stripe = useStripe();
@@ -65,7 +66,7 @@ const Payment = () => {
 
 
         try {
-            const { data } = await axios.post('http://localhost:4000/api/v1/payment/process', paymentData, { withCredentials: true })
+            const { data } = await axios.post(`${severUrl}/api/v1/payment/process`, paymentData, { withCredentials: true })
             const clientSecret = data.client_secret;
 
             console.log("clientSecret", clientSecret);

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, REGISTER_USER_REQUEST, REGISTER_USER_SUCCESS, REGISTER_USER_FAILURE, LOGOUT_USER_REQUEST, LOGOUT_USER_SUCCESS, LOGOUT_USER_FAILURE, GET_USER_PROFILE_REQUEST, GET_USER_PROFILE_SUCCESS, GET_USER_PROFILE_FAILURE, UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_SUCCESS, UPDATE_PROFILE_FAILURE, UPDATE_PASSWORD_REQUEST, UPDATE_PASSWORD_SUCCESS, UPDATE_PASSWORD_FAILURE, FORGOT_PASSWORD_REQUEST, FORGOT_PASSWORD_SUCCESS, FORGOT_PASSWORD_FAILURE, NEW_PASSWORD_REQUEST, NEW_PASSWORD_SUCCESS, NEW_PASSWORD_FAILURE, ALL_USERS_REQUEST, ALL_USERS_SUCCESS, ALL_USERS_FAIL, DELETE_USER_REQUEST, DELETE_USER_SUCCESS, DELETE_USER_FAIL, UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS, UPDATE_USER_FAIL, USER_DETAILS_REQUEST, USER_DETAILS_SUCCESS, USER_DETAILS_FAIL } from "../actionTypes/userTypes";
+import { severUrl } from "../../api/api";
 
 export const loginAction = ({ email, password }) => async (dispatch) => {
     try {
@@ -7,7 +8,7 @@ export const loginAction = ({ email, password }) => async (dispatch) => {
             type: LOGIN_REQUEST
         })
 
-        const { data } = await axios.post(`http://localhost:4000/api/v1/login`, { email, password }, { withCredentials: true });
+        const { data } = await axios.post(`${severUrl}/api/v1/login`, { email, password }, { withCredentials: true });
 
         dispatch({
             type: LOGIN_SUCCESS,
@@ -29,7 +30,7 @@ export const loadUser = () => async (dispatch) => {
             type: GET_USER_PROFILE_REQUEST
         })
 
-        const { data } = await axios.get(`http://localhost:4000/api/v1/me`, { withCredentials: true });
+        const { data } = await axios.get(`${severUrl}/api/v1/me`, { withCredentials: true });
 
         dispatch({
             type: GET_USER_PROFILE_SUCCESS,
@@ -51,7 +52,7 @@ export const registerAction = (formData) => async (dispatch) => {
             type: REGISTER_USER_REQUEST
         })
 
-        const { data } = await axios.post(`http://localhost:4000/api/v1/register`, formData, { withCredentials: true });
+        const { data } = await axios.post(`${severUrl}/api/v1/register`, formData, { withCredentials: true });
 
         dispatch({
             type: REGISTER_USER_SUCCESS,
@@ -74,7 +75,7 @@ export const logoutAction = () => async (dispatch) => {
             type: LOGOUT_USER_REQUEST
         })
 
-        const { data } = await axios.get(`http://localhost:4000/api/v1/logout`, { withCredentials: true });
+        const { data } = await axios.get(`${severUrl}/api/v1/logout`, { withCredentials: true });
 
         dispatch({
             type: LOGOUT_USER_SUCCESS,
@@ -96,7 +97,7 @@ export const updateProfileAction = (userData) => async (dispatch) => {
 
         dispatch({ type: UPDATE_PROFILE_REQUEST })
 
-        const { data } = await axios.put('http://localhost:4000/api/v1/me/update', userData, { withCredentials: true })
+        const { data } = await axios.put(`${severUrl}/api/v1/me/update`, userData, { withCredentials: true })
 
         dispatch({
             type: UPDATE_PROFILE_SUCCESS,
@@ -117,7 +118,7 @@ export const updatePasswordAction = (passwords) => async (dispatch) => {
 
         dispatch({ type: UPDATE_PASSWORD_REQUEST })
 
-        const { data } = await axios.put('http://localhost:4000/api/v1/password/update', passwords, { withCredentials: true })
+        const { data } = await axios.put(`${severUrl}/api/v1/password/update`, passwords, { withCredentials: true })
 
         dispatch({
             type: UPDATE_PASSWORD_SUCCESS,
@@ -145,7 +146,7 @@ export const forgotPasswordAction = (email) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post('http://localhost:4000/api/v1/password/forgot', email, config)
+        const { data } = await axios.post(`${severUrl}/api/v1/password/forgot`, email, config)
 
         dispatch({
             type: FORGOT_PASSWORD_SUCCESS,
@@ -172,7 +173,7 @@ export const resetPassword = ({ token, passwords }) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.put(`http://localhost:4000/api/v1/password/reset/${token}`, passwords, config)
+        const { data } = await axios.put(`${severUrl}/api/v1/password/reset/${token}`, passwords, config)
 
         dispatch({
             type: NEW_PASSWORD_SUCCESS,
@@ -193,7 +194,7 @@ export const allUsers = () => async (dispatch) => {
 
         dispatch({ type: ALL_USERS_REQUEST })
 
-        const { data } = await axios.get('http://localhost:4000/api/v1/admin/users', { withCredentials: true })
+        const { data } = await axios.get(`${severUrl}/api/v1/admin/users`, { withCredentials: true })
 
         dispatch({
             type: ALL_USERS_SUCCESS,
@@ -214,7 +215,7 @@ export const deleteUser = (id) => async (dispatch) => {
 
         dispatch({ type: DELETE_USER_REQUEST })
 
-        const { data } = await axios.delete(`http://localhost:4000/api/v1/admin/user/${id}`, { withCredentials: true })
+        const { data } = await axios.delete(`${severUrl}/api/v1/admin/user/${id}`, { withCredentials: true })
 
         dispatch({
             type: DELETE_USER_SUCCESS,
@@ -235,7 +236,7 @@ export const updateUser = (id, userData) => async (dispatch) => {
 
         dispatch({ type: UPDATE_USER_REQUEST })
 
-        const { data } = await axios.put(`http://localhost:4000/api/v1/admin/user/${id}`, userData, { withCredentials: true })
+        const { data } = await axios.put(`${severUrl}/api/v1/admin/user/${id}`, userData, { withCredentials: true })
 
         dispatch({
             type: UPDATE_USER_SUCCESS,
@@ -257,7 +258,7 @@ export const getUserDetails = (id) => async (dispatch) => {
         dispatch({ type: USER_DETAILS_REQUEST })
 
 
-        const { data } = await axios.get(`http://localhost:4000/api/v1/admin/user/${id}`, { withCredentials: true })
+        const { data } = await axios.get(`${severUrl}/api/v1/admin/user/${id}`, { withCredentials: true })
 
         dispatch({
             type: USER_DETAILS_SUCCESS,

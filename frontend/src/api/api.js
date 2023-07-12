@@ -1,0 +1,1 @@
+export const severUrl = "http://localhost:4000";

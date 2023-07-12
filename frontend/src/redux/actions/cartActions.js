@@ -1,12 +1,13 @@
 import axios from 'axios';
 import { ADD_TO_CART_FAILURE, ADD_TO_CART_REQUEST, ADD_TO_CART_SUCCESS, DECREASE_CART_ITEM_FAILURE, DECREASE_CART_ITEM_REQUEST, DECREASE_CART_ITEM_SUCCESS, GET_CART_FAILURE, GET_CART_REQUEST, GET_CART_SUCCESS, INCREASE_CART_ITEM_FAILURE, INCREASE_CART_ITEM_REQUEST, INCREASE_CART_ITEM_SUCCESS, REMOVE_ALL_CART_PRODUCTS_FAILURE, REMOVE_ALL_CART_PRODUCTS_REQUEST, REMOVE_ALL_CART_PRODUCTS_SUCCESS, REMOVE_CART_ITEM_FAILURE, REMOVE_CART_ITEM_REQUEST, REMOVE_CART_ITEM_SUCCESS, SAVE_SHIPPING_INFO } from "../actionTypes/cartTypes";
+import { severUrl } from '../../api/api';
 
 export const getCartAction = ({ userId }) => async (dispatch) => {
 
     try {
         dispatch({ type: GET_CART_REQUEST });
 
-        const response = await axios.get(`http://localhost:4000/api/v1/cart?userId=${userId}`, { withCredentials: true });
+        const response = await axios.get(`${severUrl}/api/v1/cart?userId=${userId}`, { withCredentials: true });
 
         dispatch({
             type: GET_CART_SUCCESS,
@@ -26,7 +27,7 @@ export const addToCartAction = ({ userId, products }) => async (dispatch) => {
     try {
         dispatch({ type: ADD_TO_CART_REQUEST });
 
-        const response = await axios.post('http://localhost:4000/api/v1/cart/add', { userId, products }, { withCredentials: true });
+        const response = await axios.post(`${severUrl}/api/v1/cart/add`, { userId, products }, { withCredentials: true });
 
         dispatch({
             type: ADD_TO_CART_SUCCESS,
@@ -50,7 +51,7 @@ export const removeCartItem = ({ userId, itemId }) => async (dispatch) => {
         };
 
         const response = await axios.delete(
-            'http://localhost:4000/api/v1/cart/remove',
+            `${severUrl}/api/v1/cart/remove`,
             config
         );
 
@@ -72,7 +73,7 @@ export const increaseQuantityAction = ({ userId, productId }) => async (dispatch
     try {
         dispatch({ type: INCREASE_CART_ITEM_REQUEST });
 
-        const response = await axios.patch('http://localhost:4000/api/v1/cart/increase', { userId, productId }, { withCredentials: true });
+        const response = await axios.patch(`${severUrl}/api/v1/cart/increase`, { userId, productId }, { withCredentials: true });
 
         dispatch({
             type: INCREASE_CART_ITEM_SUCCESS,
@@ -91,7 +92,7 @@ export const decreaseQuantityAction = ({ userId, productId }) => async (dispatch
     try {
         dispatch({ type: DECREASE_CART_ITEM_REQUEST });
 
-        const response = await axios.patch('http://localhost:4000/api/v1/cart/decrease', { userId, productId }, { withCredentials: true });
+        const response = await axios.patch(`${severUrl}/api/v1/cart/decrease`, { userId, productId }, { withCredentials: true });
 
         dispatch({
             type: DECREASE_CART_ITEM_SUCCESS,
@@ -127,7 +128,7 @@ export const deleteAllCartItem = ({ userId }) => async (dispatch) => {
         };
 
         const response = await axios.delete(
-            'http://localhost:4000/api/v1/cart/clear',
+            `${severUrl}/api/v1/cart/clear`,
             config
         );
 

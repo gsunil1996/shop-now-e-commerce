@@ -1,12 +1,13 @@
 import axios from 'axios'
 import { ALL_ORDERS_FAIL, ALL_ORDERS_REQUEST, ALL_ORDERS_SUCCESS, CREATE_ORDER_FAIL, CREATE_ORDER_REQUEST, CREATE_ORDER_SUCCESS, DELETE_ORDER_FAIL, DELETE_ORDER_REQUEST, DELETE_ORDER_SUCCESS, MY_ORDERS_FAIL, MY_ORDERS_REQUEST, MY_ORDERS_SUCCESS, ORDER_DETAILS_FAIL, ORDER_DETAILS_REQUEST, ORDER_DETAILS_SUCCESS, UPDATE_ORDER_FAIL, UPDATE_ORDER_REQUEST, UPDATE_ORDER_SUCCESS } from '../actionTypes/orderTypes'
+import { severUrl } from '../../api/api'
 
 export const createOrder = (order) => async (dispatch) => {
     try {
 
         dispatch({ type: CREATE_ORDER_REQUEST })
 
-        const { data } = await axios.post('http://localhost:4000/api/v1/order/new', order, { withCredentials: true })
+        const { data } = await axios.post(`${severUrl}/api/v1/order/new`, order, { withCredentials: true })
 
         dispatch({
             type: CREATE_ORDER_SUCCESS,
@@ -27,7 +28,7 @@ export const myOrders = () => async (dispatch) => {
 
         dispatch({ type: MY_ORDERS_REQUEST });
 
-        const { data } = await axios.get('http://localhost:4000/api/v1/orders/me', { withCredentials: true })
+        const { data } = await axios.get(`${severUrl}/api/v1/orders/me`, { withCredentials: true })
 
         dispatch({
             type: MY_ORDERS_SUCCESS,
@@ -48,7 +49,7 @@ export const getOrderDetails = (id) => async (dispatch) => {
 
         dispatch({ type: ORDER_DETAILS_REQUEST });
 
-        const { data } = await axios.get(`http://localhost:4000/api/v1/order/${id}`, { withCredentials: true })
+        const { data } = await axios.get(`${severUrl}/api/v1/order/${id}`, { withCredentials: true })
 
         dispatch({
             type: ORDER_DETAILS_SUCCESS,
@@ -69,7 +70,7 @@ export const allOrders = () => async (dispatch) => {
 
         dispatch({ type: ALL_ORDERS_REQUEST });
 
-        const { data } = await axios.get(`http://localhost:4000/api/v1/admin/orders`, { withCredentials: true })
+        const { data } = await axios.get(`${severUrl}/api/v1/admin/orders`, { withCredentials: true })
 
         dispatch({
             type: ALL_ORDERS_SUCCESS,
@@ -91,7 +92,7 @@ export const updateOrder = (id, orderData) => async (dispatch) => {
         dispatch({ type: UPDATE_ORDER_REQUEST })
 
 
-        const { data } = await axios.put(`http://localhost:4000/api/v1/admin/order/${id}`, orderData, { withCredentials: true })
+        const { data } = await axios.put(`${severUrl}/api/v1/admin/order/${id}`, orderData, { withCredentials: true })
 
         dispatch({
             type: UPDATE_ORDER_SUCCESS,
@@ -112,7 +113,7 @@ export const deleteOrder = (id) => async (dispatch) => {
 
         dispatch({ type: DELETE_ORDER_REQUEST })
 
-        const { data } = await axios.delete(`http://localhost:4000/api/v1/admin/order/${id}`, { withCredentials: true })
+        const { data } = await axios.delete(`${severUrl}/api/v1/admin/order/${id}`, { withCredentials: true })
 
         dispatch({
             type: DELETE_ORDER_SUCCESS,
