@@ -22,10 +22,13 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(fileUpload());
 
-app.use(cors({
-  origin: 'https://shop-now-e-commerce.vercel.app',
-  credentials: true
-}));
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'https://shop-now-e-commerce.vercel.app');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+});
 
 app.options('*', cors());
 
