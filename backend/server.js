@@ -30,7 +30,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors({
-  origin: "https://shop-now-e-commerce.vercel.app",
+  origin: 'http://localhost:3000',
   credentials: true
 }));
 app.use(cookieParser());
