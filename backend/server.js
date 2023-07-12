@@ -34,6 +34,9 @@ app.use(cors({
   origin: 'https://shop-now-e-commerce.vercel.app',
   credentials: true
 }));
+
+app.options('*', cors());
+
 app.use(cookieParser());
 app.use(fileUpload());
 
